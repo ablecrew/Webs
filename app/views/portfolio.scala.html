@@ -1,0 +1,261 @@
+@()
+@main("Our Team") {
+
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/portfolio.css")' />
+
+<div class="portfolio-container">
+    <!-- Portfolio Header -->
+    <div class="portfolio-header">
+        <h1 class="portfolio-title">Our Portfolio</h1>
+        <p class="portfolio-subtitle">Showcasing our finest work and creative solutions</p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Design</button>
+        <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+        <button class="filter-btn" data-filter="branding">Branding</button>
+        <button class="filter-btn" data-filter="ui-ux">UI/UX</button>
+    </div>
+
+    <!-- Portfolio Grid -->
+    <div class="portfolio-grid">
+        <!-- Portfolio Item 1 -->
+        <div class="portfolio-item" data-category="web">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/E-Commerce.png")" alt="E-commerce Platform" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">E-commerce Platform</h3>
+                        <p class="portfolio-category">Web Design</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">Modern E-commerce Platform</h4>
+                <div class="project-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">MongoDB</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 2 -->
+        <div class="portfolio-item" data-category="mobile">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/Fit.png")" alt="Fitness Tracking App" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Fitness Tracking App</h3>
+                        <p class="portfolio-category">Mobile App</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">FitTrack Pro</h4>
+                <div class="project-tags">
+                    <span class="tag">React Native</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">HealthKit</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 3 -->
+        <div class="portfolio-item" data-category="branding">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/portfolio/project3.jpg")" alt="Brand Identity Design" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Brand Identity Design</h3>
+                        <p class="portfolio-category">Branding</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">TechVision Brand</h4>
+                <div class="project-tags">
+                    <span class="tag">Logo Design</span>
+                    <span class="tag">Brand Guide</span>
+                    <span class="tag">Marketing</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 4 -->
+        <div class="portfolio-item" data-category="ui-ux">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/FinBank.png")" alt="Banking Dashboard" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Banking Dashboard</h3>
+                        <p class="portfolio-category">UI/UX Design</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">FinBank Dashboard</h4>
+                <div class="project-tags">
+                    <span class="tag">Figma</span>
+                    <span class="tag">Prototyping</span>
+                    <span class="tag">User Testing</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 5 -->
+        <div class="portfolio-item" data-category="web">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/Restuarant.png")" alt="Restaurant Website" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Restaurant Website</h3>
+                        <p class="portfolio-category">Web Design</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">Savory Bites</h4>
+                <div class="project-tags">
+                    <span class="tag">WordPress</span>
+                    <span class="tag">Online Booking</span>
+                    <span class="tag">SEO</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 6 -->
+        <div class="portfolio-item" data-category="mobile">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/portfolio/project6.jpg")" alt="Travel Booking App" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Travel Booking App</h3>
+                        <p class="portfolio-category">Mobile App</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">Wanderlust Travel</h4>
+                <div class="project-tags">
+                    <span class="tag">Flutter</span>
+                    <span class="tag">API Integration</span>
+                    <span class="tag">Payment Gateway</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 7 -->
+        <div class="portfolio-item" data-category="branding">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/portfolio/project7.jpg")" alt="Fashion Brand Identity" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Fashion Brand Identity</h3>
+                        <p class="portfolio-category">Branding</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">Elegance Fashion</h4>
+                <div class="project-tags">
+                    <span class="tag">Packaging</span>
+                    <span class="tag">Photography</span>
+                    <span class="tag">Social Media</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 8 -->
+        <div class="portfolio-item" data-category="ui-ux">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/Medicare.png")" alt="Healthcare Portal" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Healthcare Portal</h3>
+                        <p class="portfolio-category">UI/UX Design</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">MediCare Portal</h4>
+                <div class="project-tags">
+                    <span class="tag">Accessibility</span>
+                    <span class="tag">HIPAA Compliant</span>
+                    <span class="tag">Research</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Item 9 -->
+        <div class="portfolio-item" data-category="web">
+            <div class="portfolio-image-wrapper">
+                <img src="@routes.Assets.versioned("images/portfolio/project9.jpg")" alt="Real Estate Platform" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-item-title">Real Estate Platform</h3>
+                        <p class="portfolio-category">Web Design</p>
+                        <div class="portfolio-actions">
+                            <button class="portfolio-btn view-btn"><i class="fas fa-eye"></i> View</button>
+                            <button class="portfolio-btn details-btn"><i class="fas fa-info-circle"></i> Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-details">
+                <h4 class="project-name">Property Hub</h4>
+                <div class="project-tags">
+                    <span class="tag">Vue.js</span>
+                    <span class="tag">Maps API</span>
+                    <span class="tag">Search Engine</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-container">
+        <button class="load-more-btn">
+            <span>Load More Projects</span>
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/portfolio.js")"></script>
+
+}

@@ -1,0 +1,402 @@
+@()
+
+@main("Customer Settings") {
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/csettings.css")' />
+
+<div class="settings-container">
+    <!-- Settings Sidebar -->
+    <aside class="settings-sidebar">
+        <nav class="settings-nav">
+            <a href="#profile" class="settings-nav-item active" data-section="profile">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                    <path d="M3 18C3 14 6 12 10 12C14 12 17 14 17 18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>Profile</span>
+            </a>
+
+            <a href="#security" class="settings-nav-item" data-section="security">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <rect x="5" y="9" width="10" height="9" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <path d="M7 9V6C7 4.34315 8.34315 3 10 3C11.6569 3 13 4.34315 13 6V9" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>Security</span>
+            </a>
+
+            <a href="#notifications" class="settings-nav-item" data-section="notifications">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 2C7.79086 2 6 3.79086 6 6V9L4 11V13H16V11L14 9V6C14 3.79086 12.2091 2 10 2Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 13V14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Notifications</span>
+            </a>
+
+            <a href="#preferences" class="settings-nav-item" data-section="preferences">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                    <path d="M10 2V4M10 16V18M18 10H16M4 10H2M15.66 15.66L14.24 14.24M5.76 5.76L4.34 4.34M15.66 4.34L14.24 5.76M5.76 14.24L4.34 15.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Preferences</span>
+            </a>
+
+            <a href="#privacy" class="settings-nav-item" data-section="privacy">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 2L3 5V9C3 13.5 5.5 17.5 10 18C14.5 17.5 17 13.5 17 9V5L10 2Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>Privacy</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Settings Content -->
+    <div class="settings-main">
+        <!-- Profile Section -->
+        <section id="section-profile" class="settings-section active">
+            <div class="section-header">
+                <h2>Profile Settings</h2>
+                <p>Manage your personal information</p>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Avatar</h3>
+                <div class="avatar-upload">
+                    <div class="avatar-preview">
+                        <img src="@routes.Assets.versioned("images/avatar-placeholder.png")" alt="Avatar" id="avatarPreview">
+                    </div>
+                    <div class="avatar-actions">
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                        <button class="btn-upload" id="uploadAvatarBtn">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M9 12V3M9 3L5 7M9 3L13 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M3 15H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Upload Photo
+                        </button>
+                        <button class="btn-text-only" id="removeAvatarBtn">Remove</button>
+                        <p class="help-text">JPG, PNG or GIF. Max size 2MB</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Personal Information</h3>
+                <form class="settings-form" id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" name="firstName" value="@@user.firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" name="lastName" value="@@user.lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" value="@@user.email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" name="company" placeholder="Your company name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea name="bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section id="section-security" class="settings-section">
+            <div class="section-header">
+                <h2>Security Settings</h2>
+                <p>Manage your password and security options</p>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Change Password</h3>
+                <form class="settings-form" id="passwordForm">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" name="currentPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" name="newPassword" id="newPassword" required>
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text">Password strength: <span id="strengthLabel">Weak</span></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" name="confirmPassword" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Update Password</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Two-Factor Authentication</h3>
+                <p class="card-description">Add an extra layer of security to your account</p>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <span class="setting-label">Enable 2FA</span>
+                        <span class="setting-description">Require a code from your phone when signing in</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="twoFactorToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Active Sessions</h3>
+                <div class="session-list">
+                    <div class="session-item">
+                        <div class="session-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="4" y="6" width="16" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="session-info">
+                            <span class="session-device">Chrome on Windows</span>
+                            <span class="session-location">Nairobi, Kenya • Current Session</span>
+                            <span class="session-time">Active now</span>
+                        </div>
+                        <span class="session-badge current">Current</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notifications Section -->
+        <section id="section-notifications" class="settings-section">
+            <div class="section-header">
+                <h2>Notification Settings</h2>
+                <p>Choose what notifications you receive</p>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Email Notifications</h3>
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Project Updates</span>
+                            <span class="setting-description">Get notified about project status changes</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">New Messages</span>
+                            <span class="setting-description">Receive emails for new messages</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Invoice Reminders</span>
+                            <span class="setting-description">Get reminded about pending invoices</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Marketing Emails</span>
+                            <span class="setting-description">Receive tips and updates from PixelForge</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Push Notifications</h3>
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Browser Notifications</span>
+                            <span class="setting-description">Show notifications in your browser</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preferences Section -->
+        <section id="section-preferences" class="settings-section">
+            <div class="section-header">
+                <h2>Preferences</h2>
+                <p>Customize your experience</p>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Appearance</h3>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <span class="setting-label">Theme</span>
+                        <span class="setting-description">Choose your interface theme</span>
+                    </div>
+                    <select class="select-input">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Language & Region</h3>
+                <div class="form-group">
+                    <label>Language</label>
+                    <select class="select-input">
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Timezone</label>
+                    <select class="select-input">
+                        <option value="UTC">UTC</option>
+                        <option value="EST">Eastern Time</option>
+                        <option value="PST">Pacific Time</option>
+                        <option value="EAT" selected>East Africa Time</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="section-privacy" class="settings-section">
+            <div class="section-header">
+                <h2>Privacy Settings</h2>
+                <p>Control your privacy and data</p>
+            </div>
+
+            <div class="settings-card">
+                <h3 class="card-title">Data & Privacy</h3>
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Profile Visibility</span>
+                            <span class="setting-description">Make your profile visible to team members</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Activity Status</span>
+                            <span class="setting-description">Show when you're online</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card danger-zone">
+                <h3 class="card-title">Danger Zone</h3>
+                <div class="danger-actions">
+                    <div class="danger-item">
+                        <div class="danger-info">
+                            <span class="danger-label">Export Your Data</span>
+                            <span class="danger-description">Download all your data from PixelForge</span>
+                        </div>
+                        <button class="btn-secondary">Export Data</button>
+                    </div>
+                    <div class="danger-item">
+                        <div class="danger-info">
+                            <span class="danger-label">Delete Account</span>
+                            <span class="danger-description">Permanently delete your account and all data</span>
+                        </div>
+                        <button class="btn-danger" id="deleteAccountBtn">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Delete Account Modal -->
+<div class="modal-overlay" id="deleteAccountModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Delete Account</h2>
+            <button class="modal-close" id="closeDeleteModal">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="warning-box">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <circle cx="24" cy="24" r="20" stroke="#ef4444" stroke-width="2"/>
+                    <path d="M24 14V26M24 34H24.02" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h3>Are you absolutely sure?</h3>
+                <p>This action cannot be undone. This will permanently delete your account and remove all your data from our servers.</p>
+            </div>
+            <form id="deleteAccountForm">
+                <div class="form-group">
+                    <label>Type <strong>DELETE</strong> to confirm</label>
+                    <input type="text" id="deleteConfirmation" placeholder="DELETE" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelDelete">Cancel</button>
+                    <button type="submit" class="btn-danger">Delete My Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/csettings.js")"></script>
+}
