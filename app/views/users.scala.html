@@ -1,0 +1,53 @@
+@(users: List[Map[String, Object]])
+
+@main("Users") {
+<div class="main">
+    <div class="card">
+        <h2>
+            <i class="fa-solid fa-users" style="margin-right:8px; color:#007bff;"></i>
+            Users
+        </h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone No</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(users.nonEmpty) {
+            @for(u <- users) {
+            <tr>
+                <td>@u.get("id")</td>
+                <td>@u.get("username")</td>
+                <td>@u.get("email")</td>
+                <td>@u.get("phone")</td>
+                <td>@u.get("role")</td>
+            </tr>
+            }
+            } else {
+            <tr>
+                <td colspan="7" style="text-align:center; color: gray;">
+                    No users available
+                </td>
+            </tr>
+            }
+            </tbody>
+        </table>
+
+
+<!-- ✅ API Integration Script -->
+<script>
+    const API_BASE = "/rentpulse-api/users";
+    const headers = {
+        "Content-Type": "application/json",
+        "X-App-Username": "rentpulse_app_001", // replace with real creds
+        "X-App-Password": "b99marasighan/X"
+    };
+</script>
+    </div>
+</div>
+}

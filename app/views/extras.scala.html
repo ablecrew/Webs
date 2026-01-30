@@ -1,0 +1,82 @@
+@main("Project Extras"){
+
+<div class="main">
+    <div class="card">
+        <h2>🗺️ Map View (Property Locations)</h2>
+        <!-- Google Maps container -->
+        <div id="map" style="height: 300px; width: 100%;"></div>
+    </div>
+
+    <div class="card">
+        <h2>📢 Bulk Messaging</h2>
+        <form>
+            <label>Send To:
+                <select>
+                    <option value="tenants">All Tenants</option>
+                    <option value="landlords">All Landlords</option>
+                </select>
+            </label>
+            <label>Message:
+                <textarea rows="4" placeholder="Type your message here..."></textarea>
+            </label>
+            <button class="btn" type="button">Send Message</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>✅ 2FA Authentication</h2>
+        <p>Two-factor authentication is currently <strong>enabled</strong> for admin and developer accounts.</p>
+        <button class="btn">Manage 2FA Settings</button>
+    </div>
+
+    <div class="card">
+        <h2>🔎 Tenant Screening (Coming Soon)</h2>
+        <p>This module will help landlords and admins assess tenant reliability based on payment history, previous evictions, and references.</p>
+        <button class="btn" disabled>Launch Screening Tool</button>
+    </div>
+</div>
+
+<!-- Google Maps Script -->
+<script>
+    function initMap() {
+        // Default center location
+        var centerLocation = { lat: -1.286389, lng: 36.817223 };
+
+        // Create a map
+        var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: centerLocation
+        });
+
+        // Fetch property data from API
+        fetch('/api/properties')
+            .then(response => response.json())
+            .then(properties => {
+                properties.forEach(property => {
+                    let position = { lat: parseFloat(property.latitude), lng: parseFloat(property.longitude) };
+
+                    let marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: property.name
+                    });
+
+                    // Optional info window
+                    let infoWindow = new google.maps.InfoWindow({
+                        content: `<strong>${property.name}</strong><br>${property.address}`
+                    });
+
+                    marker.addListener('click', () => {
+                        infoWindow.open(map, marker);
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading properties:', error));
+    }
+</script>
+
+<!-- Google Maps API -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA49rije1HuRfuTmuJIfFri8OROqa2FUus">
+</script>
+}

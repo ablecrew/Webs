@@ -1,0 +1,90 @@
+@(analytics: List[Map[String, Object]])
+
+@main("Services Analytics"){
+
+<div class="main">
+    <div class="card">
+        <h2>📉 Rent Collection Trend</h2>
+        <canvas id="rentTrendChart" style="height: 250px; background: #eef5ff; border-radius: 1rem;"></canvas>
+    </div>
+
+    <div class="card">
+        <h2>🏠 Occupancy Rate</h2>
+        <canvas id="occupancyChart" style="height: 200px; background: #eef5ff; border-radius: 1rem;"></canvas>
+    </div>
+
+    <div class="card">
+        <h2>💵 Income Distribution</h2>
+        <canvas id="incomeChart" style="height: 200px; background: #eef5ff; border-radius: 1rem;"></canvas>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const headers = {
+        "Content-Type": "application/json",
+        "X-App-Username": "rentpulse_app_001",
+        "X-App-Password": "b99marasighan/X"
+    };
+
+    // 1. Rent Collection Line Chart
+    fetch('/api/rent-trend.php', { headers })
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('rentTrendChart'), {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Rent Collected',
+                        data: data.values,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0,123,255,0.2)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: { responsive: true }
+            });
+        })
+        .catch(err => console.error("Rent Trend API error:", err));
+
+    // 2. Occupancy Rate Pie/Bar Chart
+    fetch('/api/occupancy-rate.php', { headers })
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('occupancyChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Occupied', 'Vacant'],
+                    datasets: [{
+                        data: [data.occupied, data.vacant],
+                        backgroundColor: ['#28a745', '#dc3545']
+                    }]
+                },
+                options: { responsive: true }
+            });
+        })
+        .catch(err => console.error("Occupancy API error:", err));
+
+    // 3. Income Distribution Pie Chart
+    fetch('/api/income-distribution.php', { headers })
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('incomeChart'), {
+                type: 'pie',
+                data: {
+                    labels: ['Rent', 'Water', 'Electricity'],
+                    datasets: [{
+                        data: [data.rent, data.water, data.electricity],
+                        backgroundColor: ['#007bff', '#17a2b8', '#ffc107']
+                    }]
+                },
+                options: { responsive: true }
+            });
+        })
+        .catch(err => console.error("Income Distribution API error:", err));
+</script>
+}

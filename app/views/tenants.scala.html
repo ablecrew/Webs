@@ -1,0 +1,397 @@
+@(tenants: List[java.util.Map[String, Object]])
+
+@main("Tenants") {
+<div class="main">
+    <div class="card">
+        <h2>
+            <i class="fa-solid fa-users" style="margin-right:8px; color:#007bff;"></i>
+            Tenants
+        </h2>
+
+        <!-- Status Filter -->
+        <div style="margin-bottom: 15px;">
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter" onchange="applyStatusFilter()" style="padding:5px 10px; border-radius:5px;">
+                <option value="All">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <table id="tenantsTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>User ID</th>
+                <th>Property ID</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(tenants.nonEmpty) {
+            @for(t <- tenants) {
+            <tr id="tenant-row-@Option(t.get("id")).getOrElse(0)">
+            <td>@Option(t.get("id")).getOrElse(0)</td>
+            <td>@Option(t.get("name")).getOrElse("")</td>
+            <td>@Option(t.get("email")).getOrElse("")</td>
+            <td>@Option(t.get("phone")).getOrElse("")</td>
+            <td>@Option(t.get("user_id")).getOrElse(0)</td>
+            <td>@Option(t.get("property_id")).getOrElse(0)</td>
+            <td>
+                <span class="status-badge status-@Option(t.get("status")).getOrElse("Other").toString.toLowerCase()"
+                onclick="toggleStatus(@Option(t.get("id")).getOrElse(0), this)">
+                @Option(t.get("status")).getOrElse("Other")
+                </span>
+            </td>
+            <td>
+                <button class="btn-action update"
+                        onclick="openTenantModal(
+                                        'update',
+                                        @Option(t.get("id")).getOrElse(0),
+                '@Option(t.get("name")).getOrElse("").toString.replaceAll("'", "\\\\'")',
+                '@Option(t.get("email")).getOrElse("").toString.replaceAll("'", "\\\\'")',
+                '@Option(t.get("phone")).getOrElse("").toString.replaceAll("'", "\\\\'")',
+                @Option(t.get("user_id")).getOrElse(0),
+                @Option(t.get("property_id")).getOrElse(0),
+                '@Option(t.get("status")).getOrElse("Other")'
+                )">
+                <i class="fa-solid fa-user-pen"></i>
+                </button>
+                <button class="btn-action delete" onclick="deleteTenant(@Option(t.get("id")).getOrElse(0))">
+                <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+            </tr>
+            }
+            } else {
+            <tr>
+                <td colspan="8" style="text-align:center; color: gray;">
+                    No tenants available
+                </td>
+            </tr>
+            }
+            </tbody>
+        </table>
+
+        <div class="tenant-actions">
+            <button onclick="openTenantModal('add')" class="btn-main">
+                <i class="fa-solid fa-user-plus"></i> Add Tenant
+            </button>
+            <button onclick="fetchTenants()" class="btn-main">
+                <i class="fa-solid fa-list"></i> Refresh List
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Tenant Modal -->
+<div id="tenantModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+    <div style="background:white; padding:20px; border-radius:8px; width:400px; position:relative;">
+        <h3 id="modalTitle">Add Tenant</h3>
+        <form id="tenantForm">
+            <input type="hidden" id="tenantId">
+
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Name:</label>
+                <input type="text" id="tenantName" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Email:</label>
+                <input type="email" id="tenantEmail" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Phone:</label>
+                <input type="text" id="tenantPhone" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>User ID:</label>
+                <input type="number" id="tenantUserId" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Property ID:</label>
+                <input type="number" id="tenantPropertyId" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Status:</label>
+                <select id="tenantStatus" class="form-control" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div style="margin-top:15px; display:flex; justify-content:flex-end; gap:10px;">
+                <button type="button" class="btn-secondary" onclick="closeTenantModal()">Cancel</button>
+                <button type="submit" class="btn-main">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .tenant-actions { margin-top:20px; display:flex; gap:12px; justify-content:flex-start; }
+    .btn-main { background: linear-gradient(90deg, #007bff, #0056d2); color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:500; transition:all 0.3s ease; }
+    .btn-main:hover { background: linear-gradient(90deg, #0056d2, #003f9e); transform:scale(1.05); }
+    .btn-action { border:none; padding:6px 10px; border-radius:6px; cursor:pointer; transition:all 0.3s ease; margin-right:5px; }
+    .btn-action.update { background:#0d6efd; color:white; }
+    .btn-action.update:hover { background:#084298; }
+    .btn-action.delete { background:#dc3545; color:white; }
+    .btn-action.delete:hover { background:#a71d2a; }
+    .btn-secondary { background:#6c757d; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; }
+    .btn-secondary:hover { background:#5a6268; }
+
+    .status-badge { position: relative; padding: 3px 8px; border-radius: 12px; color: white; font-weight: 500; font-size: 0.85em; cursor: pointer; }
+    .status-badge::after { content: "Click to change status"; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background-color: black; color: #fff; padding: 4px 8px; border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-size: 0.75em; z-index: 1000; }
+    .status-badge:hover::after { opacity: 1; }
+    .status-active { background-color: #28a745; }
+    .status-inactive { background-color: #dc3545; }
+    .status-other { background-color: #6c757d; }
+</style>
+
+@Html("""
+<script type="text/javascript">
+    // Points directly to the XAMPP backend
+    const API_BASE = "http://localhost/rentpulse-api/tenants";
+
+    // ✅ Centralize app credentials
+    const appCredentials = {
+        app_username: "rentpulse_app_001",
+        app_password: "b99marasighan/X"
+    };
+
+    function statusBadgeClass(status) {
+        var s = (status || "Other").toLowerCase();
+        switch (s) {
+            case "active": return "status-active";
+            case "inactive": return "status-inactive";
+            default: return "status-other";
+        }
+    }
+
+    // ✅ Add a tenant (make sure it's not double-submitting)
+    async function addTenant(e) {
+        if (e) e.preventDefault(); // prevent form reload
+
+        const tenantData = {
+            ...appCredentials,
+            user_id: document.getElementById('user_id').value || 0,
+            name: document.getElementById('name').value.trim(),
+            property_id: parseInt(document.getElementById('property_id').value) || 0,
+            phone: document.getElementById('phone').value.trim() || '',
+            email: document.getElementById('email').value.trim() || '',
+            move_in_date: document.getElementById('move_in_date').value || new Date().toISOString().split('T')[0]
+        };
+
+        if (!tenantData.name || tenantData.property_id === 0) {
+            alert("Please provide a tenant name and select a property.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/add_tenant.php`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(tenantData)
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            if (result.success) {
+                alert("Tenant added successfully! ID: " + result.tenant_id);
+                return; // ✅ stop execution after success
+            } else {
+                alert("Error: " + result.message);
+                return;
+            }
+
+        } catch (error) {
+            console.error("Error adding tenant:", error);
+            alert("Error adding tenant");
+        }
+    }
+
+    // ✅ Toggle status
+    async function toggleStatus(id, el) {
+        const current = el.innerText || "Other";
+        let next;
+        switch (current.toLowerCase()) {
+            case "active": next = "Inactive"; break;
+            case "inactive": next = "Other"; break;
+            default: next = "Active"; break;
+        }
+        try {
+            const res = await fetch(`${API_BASE}/update_tenant.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ...appCredentials,
+                    id: id,
+                    status: next
+                })
+            });
+            const data = await res.json();
+            if (data && data.success) {
+                el.innerText = next;
+                el.className = `status-badge ${statusBadgeClass(next)}`;
+                return;
+            } else {
+                alert(data.message || "Error updating status");
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error updating status");
+        }
+    }
+
+    // ✅ Open modal for Add or Update
+    function openTenantModal(mode, id = null, name = '', email = '', phone = '', userId = '', propertyId = '') {
+        document.getElementById("tenantModal").style.display = "flex";
+        document.getElementById("modalTitle").innerText = mode === "add" ? "Add Tenant" : "Update Tenant";
+
+        document.getElementById("tenantId").value = id || "";
+        document.getElementById("tenantName").value = name;
+        document.getElementById("tenantEmail").value = email;
+        document.getElementById("tenantPhone").value = phone;
+        document.getElementById("tenantUserId").value = userId || "";
+        document.getElementById("tenantPropertyId").value = propertyId || "";
+
+        document.getElementById("tenantForm").onsubmit = async function (e) {
+            e.preventDefault(); // ✅ stop double submission
+
+            const tenantData = {
+                ...appCredentials,
+                id: document.getElementById("tenantId").value || null,
+                name: document.getElementById("tenantName").value.trim(),
+                email: document.getElementById("tenantEmail").value.trim(),
+                phone: document.getElementById("tenantPhone").value.trim(),
+                user_id: document.getElementById("tenantUserId").value || 0,
+                property_id: parseInt(document.getElementById("tenantPropertyId").value) || 0
+            };
+
+            if (!tenantData.name || tenantData.property_id === 0) {
+                alert("Please provide a tenant name and select a property.");
+                return;
+            }
+
+            let endpoint = mode === "add" ? `${API_BASE}/add_tenant.php` : `${API_BASE}/update_tenant.php`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(tenantData)
+                });
+
+                const data = await res.json();
+                console.log(data);
+
+                if (data.success) {
+                    alert(mode === "add" ? "Tenant added successfully!" : "Tenant updated successfully!");
+                } else {
+                    alert("Error: " + (data.message || "Failed to save tenant"));
+                }
+
+                closeTenantModal();
+                fetchTenants();
+                return; // ✅ stop further execution
+
+            } catch (err) {
+                console.error(err);
+                alert("Error saving tenant");
+            }
+        };
+    }
+
+    // ✅ Close modal
+    function closeTenantModal() {
+        document.getElementById("tenantModal").style.display = "none";
+    }
+
+    // ✅ Delete tenant
+    async function deleteTenant(id) {
+        if (!confirm("Are you sure you want to delete tenant #" + id + "?")) return;
+        try {
+            const res = await fetch(`${API_BASE}/delete_tenant.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: id })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                alert(data.message || "Tenant deleted successfully!");
+                fetchTenants();
+            } else {
+                alert("Error: " + (data.message || "Failed to delete tenant"));
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Error deleting tenant");
+        }
+    }
+
+    // ✅ Fetch tenants (for Refresh List button)
+    async function fetchTenants() {
+        try {
+            const res = await fetch(`${API_BASE}/list_tenants.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(appCredentials)
+            });
+
+            const data = await res.json();
+            console.log("Fetched tenants:", data);
+
+            const tbody = document.querySelector("#tenantsTable tbody");
+            tbody.innerHTML = "";
+
+            if (data.success && data.tenants && data.tenants.length > 0) {
+                data.tenants.forEach(t => {
+                    const row = `
+                        <tr id="tenant-row-${t.id}">
+                            <td>${t.id}</td>
+                            <td>${t.name}</td>
+                            <td>${t.email}</td>
+                            <td>${t.phone}</td>
+                            <td>${t.user_id}</td>
+                            <td>${t.property_id}</td>
+                            <td>
+                                <span class="status-badge ${statusBadgeClass(t.status)}"
+                                      onclick="toggleStatus(${t.id}, this)">
+                                      ${t.status}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-action update"
+                                        onclick="openTenantModal('update', ${t.id}, '${t.name}', '${t.email}', '${t.phone}', ${t.user_id}, ${t.property_id})">
+                                        <i class="fa-solid fa-user-pen"></i>
+                                </button>
+                                <button class="btn-action delete"
+                                        onclick="deleteTenant(${t.id})">
+                                        <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>`;
+                    tbody.insertAdjacentHTML("beforeend", row);
+                });
+            } else {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: gray;">No tenants available</td></tr>`;
+            }
+
+        } catch (err) {
+            console.error("Error fetching tenants:", err);
+            alert("Error fetching tenants");
+        }
+    }
+</script>
+""")
+
+}

@@ -1,0 +1,358 @@
+@(landlords: List[java.util.Map[String, Object]])
+
+@main("Landlord Management") {
+
+<div class="main">
+    <div class="card">
+        <h2>
+            <i class="fa-solid fa-user-tie" style="margin-right:8px; color:#007bff;"></i>
+            Landlords
+        </h2>
+
+        <!-- Status Filter -->
+        <div style="margin-bottom: 15px;">
+            <label for="landlordStatusFilter">Filter by Status:</label>
+            <select id="landlordStatusFilter" onchange="applyLandlordStatusFilter()" style="padding:5px 10px; border-radius:5px;">
+                <option value="All">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Pending">Pending</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <table id="landlordsTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>User ID</th>
+                <th>Properties</th>
+                <th>Tenants</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(landlords.nonEmpty) {
+            @for(l <- landlords) {
+            <tr id="landlord-row-@Option(l.get("id")).getOrElse(0)">
+            <td>@Option(l.get("id")).getOrElse(0)</td>
+            <td>@Option(l.get("name")).getOrElse("")</td>
+            <td>@Option(l.get("email")).getOrElse("")</td>
+            <td>@Option(l.get("phone")).getOrElse("")</td>
+            <td>@Option(l.get("user_id")).getOrElse(0)</td>
+            <td>@Option(l.get("properties")).getOrElse(0)</td>
+            <td>@Option(l.get("tenants")).getOrElse(0)</td>
+            <td>
+                <span class="status-badge status-@Option(l.get("status")).getOrElse("Other").toString.toLowerCase()"
+                onclick="toggleLandlordStatus(@Option(l.get("id")).getOrElse(0), this)">
+                @Option(l.get("status")).getOrElse("Other")
+                </span>
+            </td>
+            <td>
+                <button class="btn-action update"
+                        onclick="openLandlordModal(
+                                'update',
+                                @Option(l.get("id")).getOrElse(0),
+                '@Option(l.get("name")).getOrElse("").toString.replaceAll("'", "\\\\'")',
+                '@Option(l.get("email")).getOrElse("").toString.replaceAll("'", "\\\\'")',
+                '@Option(l.get("phone")).getOrElse("").toString.replaceAll("'", "\\\\'")',
+                @Option(l.get("user_id")).getOrElse(0),
+                @Option(l.get("properties")).getOrElse(0),
+                @Option(l.get("tenants")).getOrElse(0),
+                '@Option(l.get("status")).getOrElse("Other")'
+                )">
+                <i class="fa-solid fa-user-pen"></i>
+                </button>
+                <button class="btn-action delete" onclick="deleteLandlord(@Option(l.get("id")).getOrElse(0))">
+                <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+            </tr>
+            }
+            } else {
+            <tr>
+                <td colspan="9" style="text-align:center; color: gray;">No landlords available</td>
+            </tr>
+            }
+            </tbody>
+        </table>
+
+        <div class="landlord-actions">
+            <button onclick="openLandlordModal('add')" class="btn-main">
+                <i class="fa-solid fa-user-plus"></i> Add Landlord
+            </button>
+            <button onclick="fetchLandlords()" class="btn-main">
+                <i class="fa-solid fa-list"></i> Refresh List
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Landlord Modal -->
+<div id="landlordModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+    <div style="background:white; padding:20px; border-radius:8px; width:400px; position:relative;">
+        <h3 id="landlordModalTitle">Add Landlord</h3>
+        <form id="landlordForm">
+            <input type="hidden" id="landlordId">
+
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Name:</label>
+                <input type="text" id="landlordName" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Email:</label>
+                <input type="email" id="landlordEmail" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Phone:</label>
+                <input type="text" id="landlordPhone" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>User ID:</label>
+                <input type="number" id="landlordUserId" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Properties:</label>
+                <input type="number" id="landlordProperties" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Tenants:</label>
+                <input type="number" id="landlordTenants" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Status:</label>
+                <select id="landlordStatus" class="form-control" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div style="margin-top:15px; display:flex; justify-content:flex-end; gap:10px;">
+                <button type="button" class="btn-secondary" onclick="closeLandlordModal()">Cancel</button>
+                <button type="submit" class="btn-main">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .landlord-actions { margin-top:20px; display:flex; gap:12px; justify-content:flex-start; }
+    .btn-main { background: linear-gradient(90deg, #007bff, #0056d2); color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:500; transition:all 0.3s ease; }
+    .btn-main:hover { background: linear-gradient(90deg, #0056d2, #003f9e); transform:scale(1.05); }
+    .btn-action { border:none; padding:6px 10px; border-radius:6px; cursor:pointer; transition:all 0.3s ease; margin-right:5px; }
+    .btn-action.update { background:#0d6efd; color:white; }
+    .btn-action.update:hover { background:#084298; }
+    .btn-action.delete { background:#dc3545; color:white; }
+    .btn-action.delete:hover { background:#a71d2a; }
+    .btn-secondary { background:#6c757d; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; }
+    .btn-secondary:hover { background:#5a6268; }
+
+    .status-badge { position: relative; padding: 3px 8px; border-radius: 12px; color: white; font-weight: 500; font-size: 0.85em; cursor: pointer; }
+    .status-active { background-color: #28a745; }
+    .status-inactive { background-color: #dc3545; }
+    .status-pending { background-color: #ffc107; color:#000; }
+    .status-other { background-color: #6c757d; }
+</style>
+
+@Html("""
+<script type="text/javascript">
+    const LANDLORD_API_BASE = "http://localhost/rentpulse-api/landlords";
+    const appCredentials = { app_username: "rentpulse_app_001", app_password: "b99marasighan/X" };
+
+    function statusBadgeClass(status) {
+        var s = (status || "Other").toLowerCase();
+        switch (s) {
+            case "active": return "status-active";
+            case "inactive": return "status-inactive";
+            case "pending": return "status-pending";
+            default: return "status-other";
+        }
+    }
+
+    // ✅ Fetch landlords
+    async function fetchLandlords() {
+        try {
+            const res = await fetch(`${LANDLORD_API_BASE}/list_landlords.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(appCredentials)
+            });
+            const data = await res.json();
+            console.log("Fetched landlords:", data);
+
+            const tbody = document.querySelector("#landlordsTable tbody");
+            tbody.innerHTML = "";
+
+            if (data.success && Array.isArray(data.landlords) && data.landlords.length > 0) {
+                data.landlords.forEach(l => {
+                    const row = `
+                        <tr id="landlord-row-${l.id}">
+                            <td>${l.id}</td>
+                            <td>${l.name}</td>
+                            <td>${l.email||''}</td>
+                            <td>${l.phone||''}</td>
+                            <td>${l.user_id}</td>
+                            <td>${l.properties||0}</td>
+                            <td>${l.tenants||0}</td>
+                            <td>
+                                <span class="status-badge ${statusBadgeClass(l.status)}"
+                                      onclick="toggleLandlordStatus(${l.id}, this)">
+                                      ${l.status || "Other"}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-action update"
+                                    onclick="openLandlordModal('update', ${l.id}, '${(l.name||'').replace(/'/g,"\\\\'")}', '${(l.email||'').replace(/'/g,"\\\\'")}', '${(l.phone||'').replace(/'/g,"\\\\'")}', ${l.user_id}, ${l.properties||0}, ${l.tenants||0}, '${(l.status||'Other').replace(/'/g,"\\\\'")}')">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </button>
+                                <button class="btn-action delete"
+                                        onclick="deleteLandlord(${l.id})">
+                                        <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>`;
+                    tbody.insertAdjacentHTML("beforeend", row);
+                });
+            } else {
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color: gray;">No landlords available</td></tr>`;
+            }
+        } catch (err) {
+            console.error("Error fetching landlords:", err);
+            alert("Error fetching landlords");
+        }
+    }
+
+    // ✅ Toggle status
+    async function toggleLandlordStatus(id, el) {
+        const current = el.innerText || "Other";
+        let next;
+        switch (current.toLowerCase()) {
+            case "active": next = "Inactive"; break;
+            case "inactive": next = "Pending"; break;
+            case "pending": next = "Other"; break;
+            default: next = "Active"; break;
+        }
+        try {
+            const res = await fetch(`${LANDLORD_API_BASE}/update_landlord.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...appCredentials, id: id, status: next })
+            });
+            const data = await res.json();
+            if (data && data.success) {
+                el.innerText = next;
+                el.className = `status-badge ${statusBadgeClass(next)}`;
+            } else {
+                alert(data.message || "Error updating status");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error updating status");
+        }
+    }
+
+    // ✅ Open modal
+    function openLandlordModal(mode, id = null, name = '', email = '', phone = '', userId = '', properties = 0, tenants = 0, status = 'Other') {
+        document.getElementById("landlordModal").style.display = "flex";
+        document.getElementById("landlordModalTitle").innerText = mode === "add" ? "Add Landlord" : "Update Landlord";
+
+        document.getElementById("landlordId").value = id || "";
+        document.getElementById("landlordName").value = name;
+        document.getElementById("landlordEmail").value = email;
+        document.getElementById("landlordPhone").value = phone;
+        document.getElementById("landlordUserId").value = userId || "";
+        document.getElementById("landlordProperties").value = properties || 0;
+        document.getElementById("landlordTenants").value = tenants || 0;
+        document.getElementById("landlordStatus").value = status;
+
+        document.getElementById("landlordForm").onsubmit = async function (e) {
+            e.preventDefault();
+
+            const landlordData = {
+                ...appCredentials,
+                id: document.getElementById("landlordId").value || null,
+                name: document.getElementById("landlordName").value.trim(),
+                email: document.getElementById("landlordEmail").value.trim(),
+                phone: document.getElementById("landlordPhone").value.trim(),
+                user_id: document.getElementById("landlordUserId").value || 0,
+                properties: parseInt(document.getElementById("landlordProperties").value) || 0,
+                tenants: parseInt(document.getElementById("landlordTenants").value) || 0,
+                status: document.getElementById("landlordStatus").value
+            };
+
+            let endpoint = mode === "add" ? `${LANDLORD_API_BASE}/add_landlord.php` : `${LANDLORD_API_BASE}/update_landlord.php`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(landlordData)
+                });
+
+                const data = await res.json();
+                console.log(data);
+
+                if (data.success) {
+                    alert(mode === "add" ? "Landlord added successfully!" : "Landlord updated successfully!");
+                } else {
+                    alert("Error: " + (data.message || "Failed to save landlord"));
+                }
+
+                closeLandlordModal();
+                fetchLandlords();
+
+            } catch (err) {
+                console.error(err);
+                alert("Error saving landlord");
+            }
+        };
+    }
+
+    // ✅ Close modal
+    function closeLandlordModal() {
+        document.getElementById("landlordModal").style.display = "none";
+    }
+
+    // ✅ Delete landlord
+    async function deleteLandlord(id) {
+        if (!confirm("Are you sure you want to delete landlord #" + id + "?")) return;
+        try {
+            const res = await fetch(`${LANDLORD_API_BASE}/delete_landlord.php`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...appCredentials, id: id })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                alert(data.message || "Landlord deleted successfully!");
+                fetchLandlords();
+            } else {
+                alert("Error: " + (data.message || "Failed to delete landlord"));
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error deleting landlord");
+        }
+    }
+
+    // ✅ Apply filter
+    function applyLandlordStatusFilter() {
+        const filter = document.getElementById("landlordStatusFilter").value.toLowerCase();
+        document.querySelectorAll("#landlordsTable tbody tr").forEach(row => {
+            const statusCell = row.querySelector(".status-badge");
+            if (!statusCell) return;
+            row.style.display = filter === "all" || statusCell.innerText.toLowerCase() === filter ? "" : "none";
+        });
+    }
+
+    fetchLandlords();
+</script>
+""")
+}
