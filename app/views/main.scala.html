@@ -6,6 +6,7 @@
 *@
 @(title: String)(content: Html)
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     @* Here's where we render the page title `String`. *@
@@ -14,103 +15,33 @@
           href="@routes.Assets.versioned("stylesheets/main.css")">
     <link rel="shortcut icon" type="image/png"
           href="@routes.Assets.versioned("images/favicon.png")">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
-<body class="light-mode">
-
-<!-- ===== HEADER / NAV ===== -->
-<header class="navbar">
-    <div class="container nav-container">
-
-        <!-- Logo Left -->
-        <div class="logo">
-            <img src="@routes.Assets.versioned("images/PA1.png")" alt="PixelForge Logo" class="logo-img"/>
-            <p class="tagline"><em>Forging Digital Excellence</em></p>
-        </div>
-
-        <!-- Centered Nav Links -->
-        <ul class="nav-links centered-nav">
-            <li><a href="@routes.HomeController.index()" class="gradient-btn">Home</a></li>
-            <li><a href="@routes.HomeController.aboutus()" class="gradient-btn">About Us</a></li>
-            <li><a href="@routes.HomeController.dashboard()" class="gradient-btn">Dashboard</a></li>
-            <li><a href="@routes.HomeController.services()" class="gradient-btn">Services</a></li>
-            <li><a href="@routes.HomeController.portfolio()" class="gradient-btn">Portfolio</a></li>
-        </ul>
-
-        <!-- Right-side Tools: Theme toggle, search, logout -->
-        <div class="nav-tools-right">
-            <!-- Theme Toggle -->
-            <div id="themeToggle">
-                <i class="fas fa-sun" id="lightIcon"></i>
-                <i class="fas fa-moon" id="darkIcon"></i>
-            </div>
-
-            <!-- Global Search -->
-            <div class="global-search">
-                <input type="text" id="globalSearchInput" placeholder="Search..."/>
-                <button id="globalSearchBtn"><i class="fas fa-search"></i></button>
-            </div>
-
-            <!-- Logout Button -->
-            <button id="logoutBtn" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
-
+<body>
+<div class="sidebar">
+    <div class="logo">
+        <img src="@routes.Assets.versioned("images/icon_1.png")" alt="RentPulse Logo">
     </div>
-</header>
-
-<!-- ===== PAGE CONTENT ===== -->
-<main class="content-wrapper">
-    @content
-</main>
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer">
-    <div class="container footer-container">
-        <div class="footer-section">
-            <h3>PixelForge Agency</h3>
-            <p><em>Forging Digital Excellence</em></p>
-        </div>
-
-        <div class="footer-section">
-            <h4>Services</h4>
-            <ul>
-                <li>App Development</li>
-                <li>Website Development</li>
-                <li>UI/UX Design</li>
-                <li>Graphic Design</li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="@routes.HomeController.index()">Home</a></li>
-                <li><a href="@routes.HomeController.dashboard()">Dashboard</a></li>
-                <li><a href="@routes.HomeController.services()">Services</a></li>
-                <li><a href="@routes.HomeController.ourteam()">Our Team</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section">
-            <h4>Contact</h4>
-            <p>Email: <a href="mailto:contact@@pixelforgeagency.com">contact@@pixelforgeagency.com</a></p>
-            <p>Phone: +254 707 528980</p>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>&copy; 2025 PixelForge Agency. All rights reserved.</p>
-    </div>
-</footer>
-
+    <div class="toggle" onclick="toggleSidebar()">☰</div>
+    <ul>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.index()'">📊 Dashboard</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.tenants()'">👥 Tenants</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.landlords()'">🏠 Landlords</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.properties()'">📌 Properties</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.payments()'">💰 Payments</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.analyticsData()'">📈 Analytics</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.users()'">🛂 User Management</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.messages()'">📨 Communication Logs</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.settings()'">⚙️ Settings</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.support()'">🧰 Support & Logs</li>
+        <li onclick="setActive(this); window.location.href='@routes.HomeController.extras()'">✨ Extras</li>
+    </ul>
+</div>
 
 @* And here's where we render the `Html` object containing
 * the page content. *@
-
+@content
 
 <script src="@routes.Assets.versioned("javascripts/main.js")"></script>
 

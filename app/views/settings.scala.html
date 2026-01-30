@@ -1,0 +1,47 @@
+@main(" System Settings"){
+
+<div class="main">
+    <div class="card">
+        <h2>⚙️ System Preferences</h2>
+        <form class="settings-form">
+            <label>
+                Platform Name:
+                <input type="text" value="RentPulse" />
+            </label>
+            <label>
+                Enable Payment Reminders:
+                <input type="checkbox" checked />
+            </label>
+            <label>
+                Enable Tenant Screening Module:
+                <input type="checkbox" disabled />
+                <small>(Coming Soon)</small>
+            </label>
+            <label>
+                Enable 2FA for Admins:
+                <input type="checkbox" checked />
+            </label>
+            <label>
+                Default Currency:
+                <select>
+                    <option>KES (Kenyan Shilling)</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                </select>
+            </label>
+            <button class="btn">Save Settings</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>🔄 Sync Settings</h2>
+        <p>Choose which modules sync with cloud backups or API endpoints.</p>
+        <ul>
+            <li><input type="checkbox" checked /> Properties Data</li>
+            <li><input type="checkbox" checked /> Payment Records</li>
+            <li><input type="checkbox" /> Internal Logs</li>
+        </ul>
+        <button class="btn">Update Sync Settings</button>
+    </div>
+</div>
+}

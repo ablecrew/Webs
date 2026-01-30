@@ -1,0 +1,277 @@
+@(properties: List[Map[String, Object]])
+
+@main("Properties Management") {
+
+<div class="main">
+    <div class="card">
+        <h2><i class="fa-solid fa-building" style="margin-right:8px; color:#007bff;"></i>
+            Properties</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Landlord ID</th>
+                <th>Rent Amount</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(properties.nonEmpty) {
+            @for(prop <- properties) {
+            <tr>
+                <td>@prop.get("property_name")</td>
+                <td>@prop.get("location")</td>
+                <td>@prop.get("landlord_id")</td>
+                <td>@prop.get("rent_amount")</td>
+                <td>@prop.get("address")</td>
+                <td>
+                    <button class="btn-action update"
+                            onclick="openPropertyModal('update', '@prop.get("id")', '@prop.get("property_name")', '@prop.get("location")', '@prop.get("landlord_id")', '@prop.get("rent_amount")', '@prop.get("address")')">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn-action delete" onclick="deleteProperty('@prop.get("id")')">
+                    <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            }
+            } else {
+            <tr>
+                <td colspan="6" style="text-align:center; color: gray;">
+                    No properties available
+                </td>
+            </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>🗺️ Property Map View</h2>
+        <!-- Google Maps placeholder -->
+        <div id="propertyMap" style="height: 300px; width: 100%; border-radius: 1rem;"></div>
+
+        <div class="property-actions">
+            <button onclick="openPropertyModal('add')" class="btn-main">
+                <i class="fa-solid fa-plus"></i> Add Property
+            </button>
+            <button onclick="getProperties()" class="btn-main">
+                <i class="fa-solid fa-list"></i> Get Properties
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="propertyModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+    <div style="background:white; padding:20px; border-radius:8px; width:400px; position:relative;">
+        <h3 id="propertyModalTitle">Add Property</h3>
+        <form id="propertyForm">
+
+            <input type="hidden" id="propertyId">
+
+            <div class="form-group">
+                <label>Property Name:</label>
+                <input type="text" id="propertyName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Location:</label>
+                <input type="text" id="propertyLocation" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Landlord ID:</label>
+                <input type="number" id="propertyLandlordId" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Rent Amount:</label>
+                <input type="number" id="propertyRentAmount" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Address:</label>
+                <input type="text" id="propertyAddress" class="form-control" required>
+            </div>
+
+            <div style="margin-top:15px; display:flex; justify-content:flex-end; gap:10px;">
+                <button type="button" class="btn-secondary" onclick="closePropertyModal()">Cancel</button>
+                <button type="submit" class="btn-main">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .property-actions {
+        margin-top:20px;
+        display:flex;
+        gap:12px;
+        justify-content:flex-start;
+    }
+    .btn-main {
+        background: linear-gradient(90deg, #007bff, #0056d2);
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    .btn-main:hover { background: linear-gradient(90deg, #0056d2, #003f9e); transform: scale(1.05); }
+    .btn-action {
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: 5px;
+    }
+    .btn-action.update { background: #0d6efd; color: white; }
+    .btn-action.update:hover { background: #084298; }
+    .btn-action.delete { background: #dc3545; color: white; }
+    .btn-action.delete:hover { background: #a71d2a; }
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .btn-secondary:hover { background: #5a6268; }
+</style>
+
+<script>
+    const PROP_API_BASE = "http://localhost/rentpulse-api/properties";
+    const appCredentials = {
+        app_username: "rentpulse_app_001",
+        app_password: "b99marasighan/X"
+    };
+
+    // ✅ Open modal
+    function openPropertyModal(mode, id = null, name = '', location = '', landlordId = '', rentAmount = '', address = '') {
+        document.getElementById("propertyModal").style.display = "flex";
+        document.getElementById("propertyModalTitle").innerText = mode === "add" ? "Add Property" : "Update Property";
+
+        document.getElementById("propertyId").value = id || "";
+        document.getElementById("propertyName").value = name;
+        document.getElementById("propertyLocation").value = location;
+        document.getElementById("propertyLandlordId").value = landlordId;
+        document.getElementById("propertyRentAmount").value = rentAmount;
+        document.getElementById("propertyAddress").value = address;
+
+        document.getElementById("propertyForm").onsubmit = async function(e) {
+            e.preventDefault();
+
+            const propertyData = {
+                ...appCredentials,
+                id: document.getElementById("propertyId").value || null,
+                property_name: document.getElementById("propertyName").value,
+                location: document.getElementById("propertyLocation").value,
+                landlord_id: parseInt(document.getElementById("propertyLandlordId").value),
+                rent_amount: parseFloat(document.getElementById("propertyRentAmount").value),
+                address: document.getElementById("propertyAddress").value
+            };
+
+            const endpoint = mode === "add"
+                ? `${PROP_API_BASE}/add_property.php`
+                : `${PROP_API_BASE}/update_property.php`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(propertyData)
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    alert(mode === "add" ? "Property added successfully!" : "Property updated successfully!");
+                    closePropertyModal();
+                    getProperties();
+                } else {
+                    alert(data.message || "Error saving property");
+                }
+            } catch(err) {
+                console.error(err);
+                alert("Error connecting to server");
+            }
+        };
+    }
+
+    // ✅ Close modal
+    function closePropertyModal() {
+        document.getElementById("propertyModal").style.display = "none";
+    }
+
+    // ✅ Delete property
+    async function deleteProperty(id) {
+        if (!confirm("Are you sure you want to delete property #" + id + "?")) return;
+        try {
+            const res = await fetch(`${PROP_API_BASE}/delete_property.php`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...appCredentials, id: id })
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert(data.message || "Property deleted successfully!");
+                getProperties();
+            } else {
+                alert("Error: " + (data.message || "Failed to delete property"));
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error deleting property");
+        }
+    }
+
+    // ✅ Fetch properties
+    async function getProperties() {
+        try {
+            const res = await fetch(`${PROP_API_BASE}/list_properties.php`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(appCredentials)
+            });
+            const data = await res.json();
+            console.log("Fetched properties:", data);
+            location.reload();
+        } catch (err) {
+            console.error(err);
+            alert("Error fetching properties");
+        }
+    }
+
+    // Google Maps integration
+    function initPropertyMap() {
+        const mapCenter = { lat: -1.286389, lng: 36.817223 }; // Nairobi default
+        const map = new google.maps.Map(document.getElementById("propertyMap"), {
+            zoom: 6,
+            center: mapCenter
+        });
+
+        const propertiesData = @Html(properties.map(p => {
+            val lat = p.getOrElse("lat", 0).toString
+            val lng = p.getOrElse("lng", 0).toString
+            val name = p.getOrElse("property_name", "").toString
+            s"""{lat: $lat, lng: $lng, name: "$name"}"""
+        }).mkString("[", ",", "]"));
+
+        propertiesData.forEach(prop => {
+            if(prop.lat && prop.lng && prop.lat != 0 && prop.lng != 0) {
+                new google.maps.Marker({
+                    position: { lat: parseFloat(prop.lat), lng: parseFloat(prop.lng) },
+                    map: map,
+                    title: prop.name
+                });
+            }
+        });
+    }
+
+    window.addEventListener('load', initPropertyMap);
+</script>
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA49rije1HuRfuTmuJIfFri8OROqa2FUus"></script>
+}
