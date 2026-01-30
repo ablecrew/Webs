@@ -1,0 +1,209 @@
+@()
+
+@main("Customer Messages") {
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/cmessages.css")' />
+
+<div class="messages-container">
+    <!-- Conversations Sidebar -->
+    <aside class="conversations-sidebar">
+        <div class="sidebar-header">
+            <h2>Messages</h2>
+            <button class="btn-new-message" id="newMessageBtn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2"/>
+                <path d="M14 14L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input type="text" placeholder="Search conversations..." id="searchConversations">
+        </div>
+
+        <div class="conversations-list" id="conversationsList">
+            <div class="conversation-item active unread" data-conversation="1">
+                <img src="@routes.Assets.versioned("images/team-avatar-1.png")" alt="Sarah Johnson" class="conversation-avatar">
+                <div class="conversation-info">
+                    <div class="conversation-header">
+                        <span class="conversation-name">Sarah Johnson</span>
+                        <span class="conversation-time">2m</span>
+                    </div>
+                    <p class="conversation-preview">The new designs are ready for your...</p>
+                </div>
+                <span class="unread-badge">3</span>
+            </div>
+
+            <div class="conversation-item" data-conversation="2">
+                <img src="@routes.Assets.versioned("images/team-avatar-2.png")" alt="Mike Chen" class="conversation-avatar">
+                <div class="conversation-info">
+                    <div class="conversation-header">
+                        <span class="conversation-name">Mike Chen</span>
+                        <span class="conversation-time">1h</span>
+                    </div>
+                    <p class="conversation-preview">Can we schedule a call to discuss...</p>
+                </div>
+            </div>
+
+            <div class="conversation-item" data-conversation="3">
+                <img src="@routes.Assets.versioned("images/team-avatar-3.png")" alt="Emma Davis" class="conversation-avatar">
+                <div class="conversation-info">
+                    <div class="conversation-header">
+                        <span class="conversation-name">Emma Davis</span>
+                        <span class="conversation-time">3h</span>
+                    </div>
+                    <p class="conversation-preview">Your invoice has been generated...</p>
+                </div>
+            </div>
+
+            <div class="conversation-item" data-conversation="4">
+                <img src="@routes.Assets.versioned("images/team-avatar-4.png")" alt="Alex Rivera" class="conversation-avatar">
+                <div class="conversation-info">
+                    <div class="conversation-header">
+                        <span class="conversation-name">Alex Rivera</span>
+                        <span class="conversation-time">1d</span>
+                    </div>
+                    <p class="conversation-preview">Great work on the homepage!</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Messages Panel -->
+    <div class="messages-panel">
+        <div class="messages-header">
+            <div class="header-user-info">
+                <img src="@routes.Assets.versioned("images/team-avatar-1.png")" alt="Sarah Johnson" class="header-avatar">
+                <div class="header-details">
+                    <h3 class="header-name">Sarah Johnson</h3>
+                    <span class="header-status online">Online</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" title="Call">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M2 3C2 2.44772 2.44772 2 3 2H5.15287C5.64171 2 6.0589 2.35341 6.13927 2.8356L7.16979 8.83558C7.2387 9.25739 7.01756 9.67673 6.62851 9.85578L4.39287 10.9736C5.51804 13.4229 7.57713 15.482 10.0264 16.6071L11.1442 14.3715C11.3233 13.9824 11.7426 13.7613 12.1644 13.8302L18.1644 14.8607C18.6466 14.9411 19 15.3583 19 15.8471V18C19 18.5523 18.5523 19 18 19H16C8.26801 19 2 12.732 2 5V3Z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                <button class="btn-icon" title="Video Call">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <rect x="2" y="5" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <path d="M14 8L18 6V14L14 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button class="btn-icon" title="More Options">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <circle cx="10" cy="4" r="1.5" fill="currentColor"/>
+                        <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+                        <circle cx="10" cy="16" r="1.5" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="messages-content" id="messagesContent">
+            <div class="date-divider">
+                <span>Today</span>
+            </div>
+
+            <div class="message-group received">
+                <img src="@routes.Assets.versioned("images/team-avatar-1.png")" alt="Sarah" class="message-avatar">
+                <div class="message-bubble">
+                    <p>Hi! I've finished working on the brand redesign mockups.</p>
+                    <span class="message-time">10:30 AM</span>
+                </div>
+            </div>
+
+            <div class="message-group received">
+                <img src="@routes.Assets.versioned("images/team-avatar-1.png")" alt="Sarah" class="message-avatar">
+                <div class="message-bubble">
+                    <p>Would you like to schedule a call to go through them together?</p>
+                    <span class="message-time">10:31 AM</span>
+                </div>
+            </div>
+
+            <div class="message-group sent">
+                <div class="message-bubble">
+                    <p>That sounds great! I'm available this afternoon.</p>
+                    <span class="message-time">10:35 AM</span>
+                </div>
+            </div>
+
+            <div class="message-group sent">
+                <div class="message-bubble">
+                    <p>How about 2 PM?</p>
+                    <span class="message-time">10:35 AM</span>
+                </div>
+            </div>
+
+            <div class="message-group received">
+                <img src="@routes.Assets.versioned("images/team-avatar-1.png")" alt="Sarah" class="message-avatar">
+                <div class="message-bubble">
+                    <p>Perfect! I'll send you a calendar invite.</p>
+                    <span class="message-time">10:37 AM</span>
+                </div>
+            </div>
+
+            <div class="message-group received">
+                <img src="@routes.Assets.versioned("images/team-avatar-1.png")" alt="Sarah" class="message-avatar">
+                <div class="message-bubble file-attachment">
+                    <div class="file-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 18C5.17157 18 3.67157 16.5 3.67157 14.6716V8C3.67157 6.17157 5.17157 4.67157 7 4.67157H17C18.8284 4.67157 20.3284 6.17157 20.3284 8V14.6716C20.3284 16.5 18.8284 18 17 18H7Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M7 9L12 12L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="file-info">
+                        <span class="file-name">Brand_Redesign_V2.pdf</span>
+                        <span class="file-size">2.4 MB</span>
+                    </div>
+                    <button class="file-download">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M9 3V12M9 12L5 8M9 12L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M3 15H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <span class="message-time">10:38 AM</span>
+                </div>
+            </div>
+
+            <div class="typing-indicator">
+                <img src="@routes.Assets.versioned("images/team-avatar-1.png")" alt="Sarah" class="typing-avatar">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-input-container">
+            <button class="btn-attach" title="Attach File">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M17 10L10 17L3 10M10 3V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="message-input-wrapper">
+                <textarea id="messageInput" placeholder="Type your message..." rows="1"></textarea>
+            </div>
+            <button class="btn-emoji" title="Add Emoji">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="7" cy="8" r="1" fill="currentColor"/>
+                    <circle cx="13" cy="8" r="1" fill="currentColor"/>
+                    <path d="M6 12C6 12 7.5 14 10 14C12.5 14 14 12 14 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <button class="btn-send" id="sendMessageBtn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M2 10L18 2L10 18L8 11L2 10Z" fill="currentColor"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/cmessages.js")"></script>
+}
