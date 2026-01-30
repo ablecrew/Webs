@@ -1,0 +1,316 @@
+@import play.api.mvc.RequestHeader
+@import play.api.i18n.Messages
+@import models.{Cart, Address}
+
+@(cart: Cart, addresses: List[Address])(implicit request: RequestHeader, messages: Messages)
+@main("Check-Out") {
+
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/checkout.css")' />
+
+<div class="checkout-container">
+    <div class="page-header">
+        <h1 class="page-title">Checkout</h1>
+        <div class="checkout-steps">
+            <div class="step active" data-step="shipping">
+                <div class="step-number">1</div>
+                <span>Shipping</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="payment">
+                <div class="step-number">2</div>
+                <span>Payment</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="review">
+                <div class="step-number">3</div>
+                <span>Review</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-layout">
+        <div class="checkout-form-section">
+            <!-- Shipping Step -->
+            <div class="checkout-step-content active" id="shippingStep">
+                <h2 class="section-title">Shipping Information</h2>
+
+                <div class="saved-addresses">
+                    <h3>Select Saved Address</h3>
+                    <div class="addresses-grid">
+                        @for(address <- addresses) {
+                        <div class="address-option @if(address.isDefault){selected}" data-address-id="@address.id" onclick="selectAddress('@address.id')">
+                            <div class="radio-indicator"></div>
+                            <div class="address-content">
+                                <h4>@address.label</h4>
+                                <p>@address.fullName</p>
+                                <p>@address.street</p>
+                                <p>@address.city, @address.state @address.zip</p>
+                            </div>
+                        </div>
+                        }
+                        <div class="address-option new-address" onclick="showNewAddressForm()">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            <p>Add New Address</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="new-address-form" id="newAddressForm" style="display: none;">
+                    <h3>New Shipping Address</h3>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Street Address</label>
+                            <input type="text" name="street" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" name="state" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ZIP Code</label>
+                                <input type="text" name="zip" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" required>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="shipping-methods">
+                    <h3>Shipping Method</h3>
+                    <div class="shipping-options">
+                        <div class="shipping-option selected" data-method="standard" onclick="selectShipping('standard')">
+                            <div class="radio-indicator"></div>
+                            <div class="shipping-details">
+                                <h4>Standard Shipping</h4>
+                                <p>5-7 business days</p>
+                            </div>
+                            <div class="shipping-price">$10.00</div>
+                        </div>
+                        <div class="shipping-option" data-method="express" onclick="selectShipping('express')">
+                            <div class="radio-indicator"></div>
+                            <div class="shipping-details">
+                                <h4>Express Shipping</h4>
+                                <p>2-3 business days</p>
+                            </div>
+                            <div class="shipping-price">$25.00</div>
+                        </div>
+                        <div class="shipping-option" data-method="overnight" onclick="selectShipping('overnight')">
+                            <div class="radio-indicator"></div>
+                            <div class="shipping-details">
+                                <h4>Overnight Shipping</h4>
+                                <p>1 business day</p>
+                            </div>
+                            <div class="shipping-price">$45.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-next" onclick="nextStep('payment')">
+                    Continue to Payment
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Payment Step -->
+            <div class="checkout-step-content" id="paymentStep">
+                <h2 class="section-title">Payment Information</h2>
+
+                <div class="billing-address-section">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="sameAsShipping" checked onchange="toggleBillingAddress()">
+                        <label for="sameAsShipping">Billing address same as shipping</label>
+                    </div>
+                </div>
+
+                <div class="payment-methods-section">
+                    <h3>Payment Method</h3>
+                    <div class="payment-tabs">
+                        <button class="payment-tab active" data-method="card" onclick="selectPaymentMethod('card')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                <line x1="1" y1="10" x2="23" y2="10"/>
+                            </svg>
+                            Credit Card
+                        </button>
+                        <button class="payment-tab" data-method="paypal" onclick="selectPaymentMethod('paypal')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 4.47a.75.75 0 0 1 .74-.63h6.37c1.77 0 3.208.394 4.295 1.178 1.077.777 1.617 1.962 1.617 3.54 0 .964-.183 1.841-.545 2.617-.364.774-.888 1.43-1.555 1.957-.665.524-1.462.927-2.38 1.206-.914.277-1.935.416-3.046.416h-1.48a.68.68 0 0 0-.67.554l-.717 4.346a.486.486 0 0 1-.48.393z"/>
+                            </svg>
+                            PayPal
+                        </button>
+                        <button class="payment-tab" data-method="crypto" onclick="selectPaymentMethod('crypto')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                            Cryptocurrency
+                        </button>
+                    </div>
+                </div>
+
+                <div class="payment-form" id="cardPaymentForm">
+                    <form>
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Expiry Date</label>
+                                <input type="text" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cardholder Name</label>
+                            <input type="text" placeholder="John Doe">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="payment-form" id="paypalPaymentForm" style="display: none;">
+                    <div class="paypal-info">
+                        <p>You will be redirected to PayPal to complete your payment</p>
+                        <button class="btn-paypal">
+                            Continue with PayPal
+                        </button>
+                    </div>
+                </div>
+
+                <div class="payment-form" id="cryptoPaymentForm" style="display: none;">
+                    <div class="crypto-options">
+                        <div class="crypto-option">
+                            <input type="radio" name="crypto" id="bitcoin" value="bitcoin">
+                            <label for="bitcoin">Bitcoin (BTC)</label>
+                        </div>
+                        <div class="crypto-option">
+                            <input type="radio" name="crypto" id="ethereum" value="ethereum">
+                            <label for="ethereum">Ethereum (ETH)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-actions">
+                    <button class="btn-back" onclick="previousStep('shipping')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
+                        </svg>
+                        Back to Shipping
+                    </button>
+                    <button class="btn-next" onclick="nextStep('review')">
+                        Review Order
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Review Step -->
+            <div class="checkout-step-content" id="reviewStep">
+                <h2 class="section-title">Review Your Order</h2>
+
+                <div class="review-section">
+                    <h3>Shipping Address</h3>
+                    <div class="review-card" id="reviewShipping"></div>
+                </div>
+
+                <div class="review-section">
+                    <h3>Payment Method</h3>
+                    <div class="review-card" id="reviewPayment"></div>
+                </div>
+
+                <div class="review-section">
+                    <h3>Order Items</h3>
+                    <div class="review-items" id="reviewItems"></div>
+                </div>
+
+                <div class="checkout-actions">
+                    <button class="btn-back" onclick="previousStep('payment')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
+                        </svg>
+                        Back to Payment
+                    </button>
+                    <button class="btn-place-order" onclick="placeOrder()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-summary-section">
+            <div class="summary-card">
+                <h2>Order Summary</h2>
+                <div class="summary-items">
+                    @for(item <- cart.items) {
+                    <div class="summary-item">
+                        <img src="@item.imageUrl" alt="@item.name">
+                        <div class="summary-item-details">
+                            <h4>@item.name</h4>
+                            <p>Qty: @item.quantity</p>
+                        </div>
+                        <span class="summary-item-price">$@{item.price * item.quantity}</span>
+                    </div>
+                    }
+                </div>
+
+                <div class="summary-totals">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>$@cart.subtotal</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="summaryShipping">$10.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>$@cart.tax</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="summaryTotal">$@cart.total</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/checkout.js")"></script>
+
+}

@@ -1,0 +1,118 @@
+@*
+* This template is called from the `index` template. This template
+* handles the rendering of the page header and body tags. It takes
+* two arguments, a `String` for the title of the page and an `Html`
+* object to insert into the body of the page.
+*@
+@(title: String)(content: Html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @* Here's where we render the page title `String`. *@
+    <title>@title</title>
+    <link rel="stylesheet" media="screen"
+          href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png"
+          href="@routes.Assets.versioned("images/favicon.png")">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body class="light-mode">
+
+<!-- ===== HEADER / NAV ===== -->
+<header class="navbar">
+    <div class="container nav-container">
+
+        <!-- Logo Left -->
+        <div class="logo">
+            <img src="@routes.Assets.versioned("images/Collection.png")" alt="Nexus-Collections Logo" class="logo-img"/>
+            <p class="tagline"></p>
+        </div>
+
+        <!-- Centered Nav Links -->
+        <ul class="nav-links centered-nav">
+            <li><a href="@routes.HomeController.index()" class="gradient-btn">Home</a></li>
+            <li><a href="@routes.HomeController.aboutus()" class="gradient-btn">About Us</a></li>
+            <li><a href="@routes.HomeController.dashboard()" class="gradient-btn">Dashboard</a></li>
+            <li><a href="@routes.HomeController.products()" class="gradient-btn">Products</a></li>
+            <li><a href="@routes.HomeController.product()" class="gradient-btn">Product</a></li>
+        </ul>
+
+        <!-- Right-side Tools: Theme toggle, search, logout -->
+        <div class="nav-tools-right">
+            <!-- Theme Toggle -->
+            <div id="themeToggle">
+                <i class="fas fa-sun" id="lightIcon"></i>
+                <i class="fas fa-moon" id="darkIcon"></i>
+            </div>
+
+            <!-- Global Search -->
+            <div class="global-search">
+                <input type="text" id="globalSearchInput" placeholder="Search..."/>
+                <button id="globalSearchBtn"><i class="fas fa-search"></i></button>
+            </div>
+
+            <!-- Logout Button -->
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+    </div>
+</header>
+
+<!-- ===== PAGE CONTENT ===== -->
+<main class="content-wrapper">
+    @content
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container footer-container">
+        <div class="footer-section">
+            <h3>Nexus - Collections</h3>
+            <p><em>Where Footwear Meets Convenience</em></p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Services</h4>
+            <ul>
+                <li>App Development</li>
+                <li>Website Development</li>
+                <li>UI/UX Design</li>
+                <li>Graphic Design</li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="@routes.HomeController.index()">Home</a></li>
+                <li><a href="@routes.HomeController.dashboard()">Dashboard</a></li>
+                <li><a href="@routes.HomeController.products()">Products</a></li>
+                <li><a href="@routes.HomeController.userprofile()">User Profile</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: <a href="mailto:contact@@nexuscollections.com">contact@@nexuscollections.com</a></p>
+            <p>Phone: +254 707 528980</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Nexus-Collections. All rights reserved.</p>
+    </div>
+</footer>
+
+
+@* And here's where we render the `Html` object containing
+* the page content. *@
+
+
+<script src="@routes.Assets.versioned("javascripts/main.js")"></script>
+
+</body>
+</html>

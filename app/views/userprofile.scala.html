@@ -1,0 +1,217 @@
+@()
+
+@main("User Profile") {
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/userprofile.css")' />
+
+<div class="profile-container">
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-banner"></div>
+            <div class="profile-info">
+                <div class="avatar-section">
+                    <div class="avatar" id="userAvatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <button class="avatar-edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 20h9"/>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="user-details">
+                    <h1 id="userName">Dande Teddy</h1>
+                    <p id="userEmail">teddy.dande4@@gmail.com</p>
+                    <div class="user-stats">
+                        <div class="stat">
+                            <strong id="orderCount">24</strong>
+                            <span>Orders</span>
+                        </div>
+                        <div class="stat">
+                            <strong id="wishlistCount">12</strong>
+                            <span>Wishlist</span>
+                        </div>
+                        <div class="stat">
+                            <strong id="reviewCount">8</strong>
+                            <span>Reviews</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tabs -->
+        <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="orders">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="8" cy="21" r="2"/><circle cx="20" cy="21" r="2"/>
+                    <path d="M5.67 6H23l-1.68 8.39a2 2 0 0 1-2 1.61H8.75a2 2 0 0 1-2-1.74L5.23 2.74A2 2 0 0 0 3.25 1H1"/>
+                </svg>
+                My Orders
+            </button>
+            <button class="tab-btn" data-tab="wishlist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                Wishlist
+            </button>
+            <button class="tab-btn" data-tab="addresses">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                Addresses
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"/>
+                </svg>
+                Settings
+            </button>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="tab-content">
+            <!-- Orders Tab -->
+            <div class="tab-panel active" id="orders">
+                <div class="panel-header">
+                    <h2>Order History</h2>
+                    <select class="filter-select">
+                        <option value="all">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                </div>
+                <div class="orders-list" id="ordersList">
+                    <!-- Orders loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Wishlist Tab -->
+            <div class="tab-panel" id="wishlist">
+                <div class="panel-header">
+                    <h2>My Wishlist</h2>
+                    <button class="btn-clear">Clear All</button>
+                </div>
+                <div class="wishlist-grid" id="wishlistGrid">
+                    <!-- Wishlist items loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Addresses Tab -->
+            <div class="tab-panel" id="addresses">
+                <div class="panel-header">
+                    <h2>Saved Addresses</h2>
+                    <button class="btn-add" id="addAddressBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add New Address
+                    </button>
+                </div>
+                <div class="addresses-grid" id="addressesGrid">
+                    <!-- Addresses loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-panel" id="settings">
+                <h2>Account Settings</h2>
+
+                <div class="settings-section">
+                    <h3>Personal Information</h3>
+                    <form class="settings-form" id="personalInfoForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" value="Dande" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" value="Teddy" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" value="teddy.dande4@@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" value="+254 734 567 890">
+                        </div>
+                        <button type="submit" class="btn-save">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Change Password</h3>
+                    <form class="settings-form" id="passwordForm">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" required>
+                        </div>
+                        <button type="submit" class="btn-save">Update Password</button>
+                    </form>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Preferences</h3>
+                    <div class="preference-item">
+                        <div>
+                            <strong>Email Notifications</strong>
+                            <p>Receive updates about orders and promotions</p>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="preference-item">
+                        <div>
+                            <strong>SMS Notifications</strong>
+                            <p>Get shipping updates via text message</p>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="preference-item">
+                        <div>
+                            <strong>Newsletter</strong>
+                            <p>Weekly updates on new arrivals and deals</p>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section danger-zone">
+                    <h3>Danger Zone</h3>
+                    <button class="btn-danger" id="deleteAccountBtn">Delete Account</button>
+                    <p>Once you delete your account, there is no going back.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/userprofile.js")"></script>
+}

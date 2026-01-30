@@ -1,0 +1,236 @@
+@()
+@main("Get Started - PixelForge Agency") {
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/auth.css")' />
+
+<section class="auth-gateway">
+    <div class="auth-container">
+        <!-- Marketing Side -->
+        <div class="marketing-side">
+            <div class="marketing-content">
+                <div class="brand-header">
+                    <div class="logo-circle">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <path d="M8 15L20 8L32 15M8 15V28L20 35L32 28V15M8 15L20 22M32 15L20 22M20 22V35" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h1 class="brand-name">PixelForge</h1>
+                </div>
+
+                <div class="marketing-message">
+                    <h2 class="message-title">
+                        Start Your
+                        <span class="gradient-text">Creative Journey</span>
+                        Today
+                    </h2>
+                    <p class="message-subtitle">
+                        Join thousands of businesses transforming their digital presence with PixelForge Agency
+                    </p>
+                </div>
+
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <h3 class="feature-title">Professional Design</h3>
+                            <p class="feature-description">Award-winning creative team at your service</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <h3 class="feature-title">Fast Turnaround</h3>
+                            <p class="feature-description">Projects delivered on time, every time</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <h3 class="feature-title">24/7 Support</h3>
+                            <p class="feature-description">Dedicated team ready to help you succeed</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="feature-text">
+                            <h3 class="feature-title">Proven Results</h3>
+                            <p class="feature-description">250+ successful projects and counting</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M10 18C10 14.6863 12.6863 12 16 12V8C10.4772 8 6 12.4772 6 18V24H14V18H10Z" fill="currentColor"/>
+                            <path d="M24 18C24 14.6863 26.6863 12 30 12V8C24.4772 8 20 12.4772 20 18V24H28V18H24Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <p class="testimonial-text">
+                        "PixelForge transformed our brand identity. Their attention to detail and creative vision exceeded our expectations."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <span>SJ</span>
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Sarah Johnson</div>
+                            <div class="author-role">CEO, TechStart Inc.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-value">250+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">98%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">15+</div>
+                        <div class="stat-label">Awards</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Auth Side -->
+        <div class="auth-side">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2 class="auth-title">Welcome Back!</h2>
+                    <p class="auth-subtitle">Choose an option to continue</p>
+                </div>
+
+                <div class="auth-options">
+                    <a href="@routes.HomeController.signup()" class="auth-button signup-button">
+                        <div class="button-content">
+                            <div class="button-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M20 8V14M23 11H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="button-text">
+                                <span class="button-title">Create Account</span>
+                                <span class="button-description">Start your free trial today</span>
+                            </div>
+                            <div class="button-arrow">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="divider">
+                        <span class="divider-text">or</span>
+                    </div>
+
+                    <a href="@routes.HomeController.login()" class="auth-button login-button">
+                        <div class="button-content">
+                            <div class="button-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="button-text">
+                                <span class="button-title">Sign In</span>
+                                <span class="button-description">Access your account</span>
+                            </div>
+                            <div class="button-arrow">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="social-auth">
+                    <div class="social-divider">
+                        <span class="social-divider-text">Or continue with</span>
+                    </div>
+
+                    <div class="social-buttons">
+                        <button class="social-button google-button">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 01-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.35z" fill="#4285F4"/>
+                                <path d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0010 20z" fill="#34A853"/>
+                                <path d="M4.405 11.9c-.2-.6-.314-1.24-.314-1.9 0-.66.114-1.3.314-1.9V5.51H1.064A9.996 9.996 0 000 10c0 1.614.386 3.14 1.064 4.49l3.34-2.59z" fill="#FBBC05"/>
+                                <path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0 6.09 0 2.71 2.24 1.064 5.51l3.34 2.59C5.19 5.736 7.395 3.977 10 3.977z" fill="#EA4335"/>
+                            </svg>
+                            <span>Google</span>
+                        </button>
+
+                        <button class="social-button github-button">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.165 20 14.418 20 10c0-5.523-4.477-10-10-10z"/>
+                            </svg>
+                            <span>GitHub</span>
+                        </button>
+
+                        <button class="social-button linkedin-button">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M18.52 0H1.48C.66 0 0 .645 0 1.44v17.12C0 19.355.66 20 1.48 20h17.04c.82 0 1.48-.645 1.48-1.44V1.44C20 .645 19.34 0 18.52 0zM5.93 17.04H2.97V7.5h2.96v9.54zM4.45 6.195c-.95 0-1.72-.77-1.72-1.72s.77-1.72 1.72-1.72 1.72.77 1.72 1.72-.77 1.72-1.72 1.72zM17.04 17.04h-2.96v-4.64c0-1.105-.02-2.525-1.54-2.525-1.54 0-1.775 1.2-1.775 2.445v4.72h-2.96V7.5h2.84v1.305h.04c.395-.75 1.36-1.54 2.8-1.54 2.995 0 3.545 1.97 3.545 4.53v5.245z"/>
+                            </svg>
+                            <span>LinkedIn</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    <p class="footer-text">
+                        By continuing, you agree to our
+                        <a href="/terms" class="footer-link">Terms of Service</a>
+                        and
+                        <a href="/policy" class="footer-link">Privacy Policy</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="help-link">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 12V8M8 4H8.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Need help? <a href="@routes.HomeController.contact()">Contact Support</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grid-pattern"></div>
+    </div>
+</section>
+
+<script src="@routes.Assets.versioned("javascripts/auth.js")"></script>
+}

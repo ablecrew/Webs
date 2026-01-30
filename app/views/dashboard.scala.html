@@ -1,0 +1,254 @@
+@()
+@main("Dashboard") {
+
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/dashboard.css")' />
+
+<div class="dashboard-container">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="welcome-section">
+            <h1 class="dashboard-title">Welcome Back!</h1>
+            <p class="dashboard-subtitle">Here's what's happening with your projects today</p>
+        </div>
+        <div class="date-section">
+            <span class="current-date" id="currentDate"></span>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card stat-primary">
+            <div class="stat-icon">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value" data-target="24">0</h3>
+                <p class="stat-label">Active Projects</p>
+            </div>
+            <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i> 12%
+            </div>
+        </div>
+
+        <div class="stat-card stat-success">
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value" data-target="156">0</h3>
+                <p class="stat-label">Completed Tasks</p>
+            </div>
+            <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i> 8%
+            </div>
+        </div>
+
+        <div class="stat-card stat-warning">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value" data-target="89">0</h3>
+                <p class="stat-label">Team Members</p>
+            </div>
+            <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i> 5%
+            </div>
+        </div>
+
+        <div class="stat-card stat-danger">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value" data-target="12">0</h3>
+                <p class="stat-label">Pending Reviews</p>
+            </div>
+            <div class="stat-trend negative">
+                <i class="fas fa-arrow-down"></i> 3%
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="content-grid">
+        <!-- Recent Projects -->
+        <div class="dashboard-card projects-card">
+            <div class="card-header">
+                <h2 class="card-title">Recent Projects</h2>
+                <button class="view-all-btn">View All</button>
+            </div>
+            <div class="projects-list">
+                <div class="project-item">
+                    <div class="project-info">
+                        <div class="project-avatar project-avatar-1">W</div>
+                        <div class="project-details">
+                            <h4 class="project-name">Website Redesign</h4>
+                            <p class="project-meta">Due in 3 days</p>
+                        </div>
+                    </div>
+                    <div class="project-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                        <span class="progress-text">75%</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-info">
+                        <div class="project-avatar project-avatar-2">M</div>
+                        <div class="project-details">
+                            <h4 class="project-name">Mobile App Development</h4>
+                            <p class="project-meta">Due in 1 week</p>
+                        </div>
+                    </div>
+                    <div class="project-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <span class="progress-text">45%</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-info">
+                        <div class="project-avatar project-avatar-3">B</div>
+                        <div class="project-details">
+                            <h4 class="project-name">Brand Identity</h4>
+                            <p class="project-meta">Due in 5 days</p>
+                        </div>
+                    </div>
+                    <div class="project-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                        <span class="progress-text">90%</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-info">
+                        <div class="project-avatar project-avatar-4">E</div>
+                        <div class="project-details">
+                            <h4 class="project-name">E-commerce Platform</h4>
+                            <p class="project-meta">Due in 2 weeks</p>
+                        </div>
+                    </div>
+                    <div class="project-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                        <span class="progress-text">30%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <div class="dashboard-card activity-card">
+            <div class="card-header">
+                <h2 class="card-title">Recent Activity</h2>
+                <button class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon activity-icon-success">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text"><strong>Sarah Johnson</strong> completed the UI design</p>
+                        <span class="activity-time">2 hours ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon activity-icon-primary">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text"><strong>Michael Chen</strong> commented on your project</p>
+                        <span class="activity-time">4 hours ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon activity-icon-warning">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text"><strong>Emily Rodriguez</strong> uploaded new assets</p>
+                        <span class="activity-time">6 hours ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon activity-icon-danger">
+                        <i class="fas fa-exclamation"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text"><strong>System Alert:</strong> Server maintenance scheduled</p>
+                        <span class="activity-time">8 hours ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon activity-icon-success">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text"><strong>David Omondi</strong> joined your team</p>
+                        <span class="activity-time">1 day ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="bottom-section">
+        <!-- Performance Chart -->
+        <div class="dashboard-card chart-card">
+            <div class="card-header">
+                <h2 class="card-title">Performance Overview</h2>
+                <div class="chart-filters">
+                    <button class="filter-btn active">Week</button>
+                    <button class="filter-btn">Month</button>
+                    <button class="filter-btn">Year</button>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="dashboard-card quick-actions-card">
+            <div class="card-header">
+                <h2 class="card-title">Quick Actions</h2>
+            </div>
+            <div class="quick-actions-grid">
+                <button class="action-btn action-btn-primary">
+                    <i class="fas fa-plus"></i>
+                    <span>New Project</span>
+                </button>
+                <button class="action-btn action-btn-success">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add Member</span>
+                </button>
+                <button class="action-btn action-btn-warning">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Create Report</span>
+                </button>
+                <button class="action-btn action-btn-info">
+                    <i class="fas fa-calendar"></i>
+                    <span>Schedule Meeting</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="@routes.Assets.versioned("javascripts/dashboard.js")"></script>
+}

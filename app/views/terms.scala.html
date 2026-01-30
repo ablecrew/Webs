@@ -1,0 +1,97 @@
+@()
+
+@main("Terms of Service"){
+
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/terms.css")' />
+
+<div class="terms-container">
+    <div class="terms-content">
+        <div class="terms-header">
+            <h1 class="terms-title">Terms of Service</h1>
+            <p class="terms-subtitle">Last updated: November 19, 2025</p>
+        </div>
+
+        <div class="terms-body">
+            <section class="terms-section">
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use our service.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>2. Use License</h2>
+                <p>Permission is granted to temporarily download one copy of the materials on our service for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+                <ul>
+                    <li>Modify or copy the materials</li>
+                    <li>Use the materials for any commercial purpose or for any public display</li>
+                    <li>Attempt to reverse engineer any software contained on our service</li>
+                    <li>Remove any copyright or other proprietary notations from the materials</li>
+                    <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h2>3. User Accounts</h2>
+                <p>When you create an account with us, you must provide information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account.</p>
+                <p>You are responsible for safeguarding the password that you use to access the service and for any activities or actions under your password.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>4. Intellectual Property</h2>
+                <p>The service and its original content, features, and functionality are and will remain the exclusive property of our company and its licensors. The service is protected by copyright, trademark, and other laws.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>5. Prohibited Activities</h2>
+                <p>You may not access or use the service for any purpose other than that for which we make the service available. Prohibited activities include, but are not limited to:</p>
+                <ul>
+                    <li>Engaging in any automated use of the system</li>
+                    <li>Interfering with, disrupting, or creating an undue burden on the service</li>
+                    <li>Attempting to impersonate another user or person</li>
+                    <li>Using any information obtained from the service to harass, abuse, or harm another person</li>
+                    <li>Uploading or transmitting viruses, malware, or any other malicious code</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h2>6. Termination</h2>
+                <p>We may terminate or suspend your account and bar access to the service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>7. Limitation of Liability</h2>
+                <p>In no event shall our company, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>8. Disclaimer</h2>
+                <p>Your use of the service is at your sole risk. The service is provided on an "AS IS" and "AS AVAILABLE" basis. The service is provided without warranties of any kind, whether express or implied.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>9. Governing Law</h2>
+                <p>These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which our company operates, without regard to its conflict of law provisions.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>10. Changes to Terms</h2>
+                <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide notice of any material changes by posting the new Terms on this page and updating the "Last updated" date.</p>
+            </section>
+
+            <section class="terms-section">
+                <h2>11. Contact Us</h2>
+                <p>If you have any questions about these Terms, please contact us at:</p>
+                <p class="contact-info">Email: contact@@pixelforgeagency.com<br>
+                    Phone: +254 (707) 528-980 | <br> +254 (113) 982-018</p>
+            </section>
+        </div>
+
+        <div class="terms-footer">
+            <button class="accept-btn" onclick="acceptTerms()">I Accept</button>
+            <button class="print-btn" onclick="printTerms()">Print Terms</button>
+        </div>
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/terms.js")"></script>
+
+}

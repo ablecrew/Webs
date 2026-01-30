@@ -1,0 +1,224 @@
+@()
+@main("Products") {
+
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/products.css")' />
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="@routes.HomeController.index()">Home</a>
+            <span>/</span>
+            <span>Shop</span>
+        </div>
+        <h1>Our Collection</h1>
+        <p>Discover your perfect pair from our curated selection</p>
+    </div>
+</section>
+
+<!-- Shop Container -->
+<section class="shop-container">
+    <div class="container">
+        <div class="shop-layout">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="filter-header">
+                    <h3>Filters</h3>
+                    <button class="clear-filters">Clear All</button>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Category</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="men">
+                            <span>Men's Shoes</span>
+                            <span class="count">(128)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="women">
+                            <span>Women's Shoes</span>
+                            <span class="count">(156)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="sports">
+                            <span>Sports & Athletic</span>
+                            <span class="count">(94)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="kids">
+                            <span>Kids' Shoes</span>
+                            <span class="count">(67)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Price Range</h4>
+                    <div class="price-range">
+                        <div class="price-inputs">
+                            <input type="number" id="minPrice" placeholder="Min" value="0">
+                            <span>-</span>
+                            <input type="number" id="maxPrice" placeholder="Max" value="500">
+                        </div>
+                        <div class="range-slider">
+                            <input type="range" id="priceSlider" min="0" max="500" value="500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Size Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Size</h4>
+                    <div class="size-options">
+                        <button class="size-btn">6</button>
+                        <button class="size-btn">7</button>
+                        <button class="size-btn">8</button>
+                        <button class="size-btn">9</button>
+                        <button class="size-btn">10</button>
+                        <button class="size-btn">11</button>
+                        <button class="size-btn">12</button>
+                    </div>
+                </div>
+
+                <!-- Color Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Color</h4>
+                    <div class="color-options">
+                        <button class="color-btn" style="background: #000;" title="Black"></button>
+                        <button class="color-btn" style="background: #fff; border: 1px solid #ddd;" title="White"></button>
+                        <button class="color-btn" style="background: #8B4513;" title="Brown"></button>
+                        <button class="color-btn" style="background: #4169E1;" title="Blue"></button>
+                        <button class="color-btn" style="background: #DC143C;" title="Red"></button>
+                        <button class="color-btn" style="background: #228B22;" title="Green"></button>
+                        <button class="color-btn" style="background: #FFD700;" title="Gold"></button>
+                        <button class="color-btn" style="background: #808080;" title="Gray"></button>
+                    </div>
+                </div>
+
+                <!-- Brand Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Brand</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="premium">
+                            <span>Premium Line</span>
+                            <span class="count">(45)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="classic">
+                            <span>Classic Series</span>
+                            <span class="count">(67)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="sport">
+                            <span>Sport Edition</span>
+                            <span class="count">(89)</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="limited">
+                            <span>Limited Edition</span>
+                            <span class="count">(23)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Rating</h4>
+                    <div class="rating-options">
+                        <label class="rating-option">
+                            <input type="radio" name="rating" value="4">
+                            <span>★★★★☆ & Up</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="radio" name="rating" value="3">
+                            <span>★★★☆☆ & Up</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <div class="products-main">
+                <!-- Toolbar -->
+                <div class="products-toolbar">
+                    <div class="toolbar-left">
+                        <button class="mobile-filter-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="4" y1="6" x2="20" y2="6"/>
+                                <line x1="4" y1="12" x2="20" y2="12"/>
+                                <line x1="4" y1="18" x2="20" y2="18"/>
+                            </svg>
+                            Filters
+                        </button>
+                        <span class="results-count">Showing <strong>445</strong> products</span>
+                    </div>
+                    <div class="toolbar-right">
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="3" y="3" width="7" height="7"/>
+                                    <rect x="14" y="3" width="7" height="7"/>
+                                    <rect x="3" y="14" width="7" height="7"/>
+                                    <rect x="14" y="14" width="7" height="7"/>
+                                </svg>
+                            </button>
+                            <button class="view-btn" data-view="list">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="3" y="5" width="18" height="4"/>
+                                    <rect x="3" y="13" width="18" height="4"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <select class="sort-select">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                            <option value="rating">Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded dynamically -->
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                        <p>Loading products...</p>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="page-btn prev" disabled>← Previous</button>
+                    <div class="page-numbers">
+                        <button class="page-num active">1</button>
+                        <button class="page-num">2</button>
+                        <button class="page-num">3</button>
+                        <span>...</span>
+                        <button class="page-num">12</button>
+                    </div>
+                    <button class="page-btn next">Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick View Modal -->
+<div class="quick-view-modal" id="quickViewModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <button class="modal-close">×</button>
+        <div class="modal-body">
+            <!-- Product quick view content -->
+        </div>
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/products.js")"></script>
+
+}

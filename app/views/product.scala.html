@@ -1,0 +1,303 @@
+@()
+
+@main("Product Details") {
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/product.css")' />
+
+<!-- Breadcrumb -->
+<div class="container">
+    <div class="breadcrumb">
+        <a href="@routes.HomeController.index()">Home</a>
+        <span>/</span>
+        <a href="@routes.HomeController.products()">Shop</a>
+        <span>/</span>
+        <span id="productCategory">Loading...</span>
+        <span>/</span>
+        <span id="productName">Loading...</span>
+    </div>
+</div>
+
+<!-- Product Details -->
+<section class="product-details">
+    <div class="container">
+        <div class="product-layout">
+            <!-- Product Gallery -->
+            <div class="product-gallery">
+                <div class="main-image">
+                    <div class="image-placeholder active" id="mainImage"></div>
+                    <button class="wishlist-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <div class="zoom-badge">Click to zoom</div>
+                </div>
+                <div class="thumbnail-gallery">
+                    <div class="thumbnail active"></div>
+                    <div class="thumbnail"></div>
+                    <div class="thumbnail"></div>
+                    <div class="thumbnail"></div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info-main">
+                <div class="product-badge" id="productBadge"></div>
+                <h1 class="product-title" id="productTitle">Loading...</h1>
+
+                <div class="product-rating-section">
+                    <div class="rating-stars" id="ratingStars">
+                        ★★★★★
+                    </div>
+                    <span class="rating-count" id="ratingCount">(0 reviews)</span>
+                    <a href="#reviews" class="write-review">Write a Review</a>
+                </div>
+
+                <div class="product-price-section">
+                    <div class="current-price" id="currentPrice">$0.00</div>
+                    <div class="original-price" id="originalPrice"></div>
+                    <div class="savings" id="savings"></div>
+                </div>
+
+                <div class="product-description" id="productDescription">
+                    <p>Loading product description...</p>
+                </div>
+
+                <!-- Size Selection -->
+                <div class="selection-group">
+                    <div class="selection-header">
+                        <label>Size</label>
+                        <a href="#size-guide" class="size-guide-link">Size Guide</a>
+                    </div>
+                    <div class="size-selector" id="sizeSelector">
+                        <!-- Sizes loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Color Selection -->
+                <div class="selection-group">
+                    <label>Color: <span id="selectedColor">Select</span></label>
+                    <div class="color-selector">
+                        <button class="color-option" style="background: #000" data-color="Black"></button>
+                        <button class="color-option" style="background: #fff; border: 1px solid #ddd" data-color="White"></button>
+                        <button class="color-option" style="background: #8B4513" data-color="Brown"></button>
+                        <button class="color-option" style="background: #4169E1" data-color="Blue"></button>
+                        <button class="color-option" style="background: #DC143C" data-color="Red"></button>
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="selection-group">
+                    <label>Quantity</label>
+                    <div class="quantity-selector">
+                        <button class="qty-btn minus">−</button>
+                        <input type="number" class="qty-input" value="1" min="1" max="10">
+                        <button class="qty-btn plus">+</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary btn-add-cart">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        Add to Cart
+                    </button>
+                    <button class="btn btn-secondary btn-buy-now">
+                        Buy Now
+                    </button>
+                </div>
+
+                <!-- Product Features -->
+                <div class="product-features">
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <div>
+                            <strong>Free Shipping</strong>
+                            <p>On orders over $100</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"/>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                        </svg>
+                        <div>
+                            <strong>30-Day Returns</strong>
+                            <p>Hassle-free returns</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        <div>
+                            <strong>Secure Payment</strong>
+                            <p>100% secure checkout</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share -->
+                <div class="product-share">
+                    <span>Share:</span>
+                    <div class="share-buttons">
+                        <button class="share-btn facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </button>
+                        <button class="share-btn twitter">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </button>
+                        <button class="share-btn pinterest">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Tabs -->
+<section class="product-tabs">
+    <div class="container">
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="description">Description</button>
+            <button class="tab-btn" data-tab="specifications">Specifications</button>
+            <button class="tab-btn" data-tab="reviews">Reviews</button>
+            <button class="tab-btn" data-tab="shipping">Shipping & Returns</button>
+        </div>
+
+        <div class="tabs-content">
+            <div class="tab-panel active" id="description">
+                <h3>Product Description</h3>
+                <p>Experience unparalleled comfort and style with our premium footwear collection. Each pair is meticulously crafted using the finest materials and cutting-edge technology to ensure superior quality and lasting durability.</p>
+                <p>Our shoes feature advanced cushioning systems, breathable materials, and ergonomic designs that provide all-day comfort. Whether you're heading to the office, hitting the gym, or stepping out for a casual day, these shoes deliver the perfect combination of style and functionality.</p>
+                <ul>
+                    <li>Premium quality materials</li>
+                    <li>Advanced comfort technology</li>
+                    <li>Durable construction</li>
+                    <li>Versatile design for any occasion</li>
+                    <li>Available in multiple sizes and colors</li>
+                </ul>
+            </div>
+
+            <div class="tab-panel" id="specifications">
+                <h3>Specifications</h3>
+                <table class="specs-table">
+                    <tr>
+                        <td>Material</td>
+                        <td>Premium Leather / Synthetic</td>
+                    </tr>
+                    <tr>
+                        <td>Sole Material</td>
+                        <td>Rubber</td>
+                    </tr>
+                    <tr>
+                        <td>Closure Type</td>
+                        <td>Lace-Up</td>
+                    </tr>
+                    <tr>
+                        <td>Heel Type</td>
+                        <td>Flat / Low Heel</td>
+                    </tr>
+                    <tr>
+                        <td>Water Resistant</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Weight</td>
+                        <td>350g (per shoe)</td>
+                    </tr>
+                    <tr>
+                        <td>Country of Origin</td>
+                        <td>Imported</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="tab-panel" id="reviews">
+                <div class="reviews-summary">
+                    <div class="rating-overview">
+                        <div class="overall-rating">
+                            <div class="rating-number">4.8</div>
+                            <div class="rating-stars">★★★★★</div>
+                            <div class="rating-text">Based on 234 reviews</div>
+                        </div>
+                        <div class="rating-breakdown">
+                            <div class="rating-bar">
+                                <span>5 ★</span>
+                                <div class="bar"><div class="fill" style="width: 85%"></div></div>
+                                <span>85%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>4 ★</span>
+                                <div class="bar"><div class="fill" style="width: 10%"></div></div>
+                                <span>10%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>3 ★</span>
+                                <div class="bar"><div class="fill" style="width: 3%"></div></div>
+                                <span>3%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>2 ★</span>
+                                <div class="bar"><div class="fill" style="width: 1%"></div></div>
+                                <span>1%</span>
+                            </div>
+                            <div class="rating-bar">
+                                <span>1 ★</span>
+                                <div class="bar"><div class="fill" style="width: 1%"></div></div>
+                                <span>1%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary write-review-btn">Write a Review</button>
+                </div>
+
+                <div class="reviews-list">
+                    <!-- Reviews loaded dynamically -->
+                </div>
+            </div>
+
+            <div class="tab-panel" id="shipping">
+                <h3>Shipping Information</h3>
+                <p><strong>Free Standard Shipping</strong> on orders over $100. Delivery within 5-7 business days.</p>
+                <p><strong>Express Shipping</strong> available for $15. Delivery within 2-3 business days.</p>
+
+                <h3 style="margin-top: 2rem;">Returns Policy</h3>
+                <p>We offer a <strong>30-day return policy</strong> on all unworn items in original packaging. Returns are free and hassle-free.</p>
+                <ul>
+                    <li>Items must be unworn and in original condition</li>
+                    <li>Include all original packaging and tags</li>
+                    <li>Refunds processed within 5-7 business days</li>
+                    <li>Free return shipping label provided</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Products -->
+<section class="related-products">
+    <div class="container">
+        <h2 class="section-title">You May Also Like</h2>
+        <div class="products-slider" id="relatedProducts">
+            <!-- Related products loaded dynamically -->
+        </div>
+    </div>
+</section>
+
+<script src="@routes.Assets.versioned("javascripts/product.js")"></script>
+}

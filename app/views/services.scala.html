@@ -1,0 +1,156 @@
+@()
+@main("Services") {
+
+<link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/services.css")' />
+
+<div class="services-container">
+    <!-- Services Header -->
+    <div class="services-header">
+        <h1 class="services-title">Our Services</h1>
+        <p class="services-subtitle">Comprehensive solutions tailored to your needs</p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="services-grid">
+        <!-- Service Card 1 -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <div class="service-icon service-icon-1">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+            </div>
+            <h3 class="service-title">Web Development</h3>
+            <p class="service-description">
+                Build stunning, responsive websites and web applications using cutting-edge technologies
+                that deliver exceptional user experiences.
+            </p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Responsive Design</li>
+                <li><i class="fas fa-check"></i> Custom Development</li>
+                <li><i class="fas fa-check"></i> E-commerce Solutions</li>
+                <li><i class="fas fa-check"></i> CMS Integration</li>
+            </ul>
+            <button class="service-btn">Learn More</button>
+        </div>
+
+        <!-- Service Card 2 -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <div class="service-icon service-icon-2">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+            </div>
+            <h3 class="service-title">Mobile App Development</h3>
+            <p class="service-description">
+                Create powerful native and cross-platform mobile applications that engage users
+                and drive business growth on iOS and Android.
+            </p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> iOS Development</li>
+                <li><i class="fas fa-check"></i> Android Development</li>
+                <li><i class="fas fa-check"></i> Cross-Platform Apps</li>
+                <li><i class="fas fa-check"></i> App Store Optimization</li>
+            </ul>
+            <button class="service-btn">Learn More</button>
+        </div>
+
+        <!-- Service Card 3 -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <div class="service-icon service-icon-3">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+            </div>
+            <h3 class="service-title">UI/UX Design</h3>
+            <p class="service-description">
+                Design beautiful, intuitive interfaces that delight users and create memorable
+                experiences through thoughtful design principles.
+            </p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> User Research</li>
+                <li><i class="fas fa-check"></i> Wireframing & Prototyping</li>
+                <li><i class="fas fa-check"></i> Visual Design</li>
+                <li><i class="fas fa-check"></i> Usability Testing</li>
+            </ul>
+            <button class="service-btn">Learn More</button>
+        </div>
+
+        <!-- Service Card 4 -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <div class="service-icon service-icon-4">
+                    <i class="fas fa-cloud"></i>
+                </div>
+            </div>
+            <h3 class="service-title">Cloud Solutions</h3>
+            <p class="service-description">
+                Leverage cloud infrastructure for scalable, secure, and cost-effective solutions
+                that grow with your business needs.
+            </p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Cloud Migration</li>
+                <li><i class="fas fa-check"></i> Infrastructure Setup</li>
+                <li><i class="fas fa-check"></i> DevOps Services</li>
+                <li><i class="fas fa-check"></i> Security & Compliance</li>
+            </ul>
+            <button class="service-btn">Learn More</button>
+        </div>
+
+        <!-- Service Card 5 -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <div class="service-icon service-icon-5">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+            </div>
+            <h3 class="service-title">Digital Marketing</h3>
+            <p class="service-description">
+                Grow your online presence and reach your target audience through strategic
+                digital marketing campaigns and SEO optimization.
+            </p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> SEO Optimization</li>
+                <li><i class="fas fa-check"></i> Social Media Marketing</li>
+                <li><i class="fas fa-check"></i> Content Strategy</li>
+                <li><i class="fas fa-check"></i> Analytics & Reporting</li>
+            </ul>
+            <button class="service-btn">Learn More</button>
+        </div>
+
+        <!-- Service Card 6 -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <div class="service-icon service-icon-6">
+                    <i class="fas fa-headset"></i>
+                </div>
+            </div>
+            <h3 class="service-title">Consulting & Support</h3>
+            <p class="service-description">
+                Expert guidance and ongoing support to help you make informed technology
+                decisions and maximize your digital investments.
+            </p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Technology Consulting</li>
+                <li><i class="fas fa-check"></i> 24/7 Support</li>
+                <li><i class="fas fa-check"></i> Training & Documentation</li>
+                <li><i class="fas fa-check"></i> Maintenance Plans</li>
+            </ul>
+            <button class="service-btn">Learn More</button>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="services-cta">
+        <h2 class="cta-title">Ready to Get Started?</h2>
+        <p class="cta-description">Let's discuss how we can help bring your vision to life</p>
+        <div class="cta-buttons">
+            <a href="@routes.HomeController.contact()" class="cta-btn cta-btn-secondary">Contact Us</a>
+            <a href="@routes.HomeController.portfolio()" class="cta-btn cta-btn-secondary">View Portfolio</a>
+        </div>
+
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/services.js")"></script>
+
+}
